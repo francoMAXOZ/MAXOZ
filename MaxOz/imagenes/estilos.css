@@ -1,0 +1,534 @@
+* {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Poppins, Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+    background-color: #fcfcfc;
+}
+
+header {
+    width: 100%;
+}
+
+.headerMains {
+    position: relative;
+}
+
+.mainheader {
+    padding: 20px 0px;
+    background: linear-gradient(to right, rgba(226, 226, 226, 0.884), #ebebeb, #ffffffd7, rgba(189, 189, 189, 0.884));
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+    top: 0;
+    border-top: 15px solid rgb(34, 34, 34);
+    width: 100%;
+    z-index: 1000;
+}
+
+.mainheader ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+ul li {
+    list-style: none;
+    font-size: 17px;
+    text-align: center;
+    width: 90px;
+    display: flex;
+    justify-content: center;
+    padding: 18px 0px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #252525f6;
+}
+
+ul li:nth-child(3) {
+    border: none;
+    margin: 0px 24px;
+}
+
+ul li a {
+    top: 0;
+    margin-top: 12px;
+    width: 138px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: #5c5c5c7c;
+    box-shadow: 0px 0px 12px #d1d1d1bb;
+    height: 138px;
+    border-radius: 100%;
+    padding: 6px;
+}
+
+ul li a img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    object-fit: cover;
+    filter: brightness(84%);
+}
+
+@media(max-width:600px) {
+    .mainheader {
+        padding: 10px;
+    }
+
+    ul li:nth-child(3) {
+        border: none;
+    }
+
+    ul li a {
+        width: 120px;
+        height: 120px;
+
+    }
+
+    ul li {
+        font-size: 14px;
+    }
+}
+
+/*banner*/
+.sectionbanner {
+    background-color: #ffffff;
+    background-image: url(imagenes/Ballons.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    margin: auto;
+    border-radius: 10px;
+    margin: 130px auto 70px;
+    filter: brightness(94%);
+    border-top: 2px solid rgb(255, 255, 255);
+    padding: 20px;
+}
+
+.contenedorbanner {
+    border-top: none;
+    box-sizing: border-box;
+    height: 450px;
+    border-radius: 12px;
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width:700px) {
+    .contenedorbanner {
+        height: 600px;
+        font-size: 37px;
+    }
+}
+
+.tittleBanner {
+    font-family: Playfair Display;
+    padding: 20px;
+    color: #242424;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    height: 90%;
+    text-align: center;
+    color: #f0f0f0;
+    text-shadow: -7px 7px 4px #141414ea;
+    background-color: #2e2e2e8e;
+    box-shadow: 0px 0px 20px #4b4a4a;
+    border: 8px double #cecece;
+}
+
+@media (min-width:700px) {
+    .tittleBanner {
+        font-size: 30px;
+        padding: 90px;
+    }
+}
+
+@media (max-width:700px) {
+    .tittleBanner {
+        font-size: 20px;
+    }
+}
+
+/*seccion turismo*/
+/* Contenedor principal */
+.maincontviajes {
+    background-color: #ffffff;
+    padding: 0px 0px;
+    margin-top: 25px;
+}
+
+.tittleViajes {
+    text-align: center;
+    opacity: 0;
+    background-color: #ffffff;
+    width: 100%;
+    text-align: center;
+    font-family: Montserrat, Cormorant Garamond;
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+.descriptionTittle {
+    text-align: center;
+    width: 84%;
+    margin: 15px auto 70px;
+    color: #313131;
+}
+
+@media (min-width:700px) {
+    .tittleViajes {
+        font-size: 20px;
+        color: #252525ea;
+    }
+
+    .descriptionTittle {
+        font-size: 20px;
+    }
+}
+
+@media (max-width:700px) {
+    .tittleViajes {
+        font-size: 20px;
+    }
+
+    .descriptionTittle {
+        font-size: 19px;
+    }
+}
+
+.contenido {
+    text-align: center;
+    font-family: Cormorant Garamond;
+}
+
+/*FIN DESCRIPCION Y TITULO ANTES DE VIAJES*/
+
+/* Efecto al hacer scroll */
+
+.contenedorSectionViajes.scrolled .tittleViajes {
+    opacity: 1;
+    /* Aparece gradualmente */
+    transform: translateY(-20px);
+    /* Se desplaza hacia arriba ligeramente */
+}
+
+.contenedorSectionViajes.scrolled .proximamente {
+    display: block;
+    position: absolute;
+    background-color: rgba(126, 148, 180, 0.568);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+.contenedorSectionViajes.scrolled .contenedorViajes {
+    opacity: 1;
+    transform: translateY(-20px);
+}
+
+.contenedorSectionViajes.scrolled .viaje {
+    opacity: 1;
+    transform: translateY(-30px);
+}
+
+/*****************************************/
+/*cartaViaje*/
+.contenedorViajes {
+    margin: auto;
+    display: flex;
+    gap: 20px;
+    padding: 0px 50px;
+    flex-wrap: wrap;
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.viaje {
+    width: 30%;
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.descriptionViaje {
+    padding: 18px;
+    width: 100%;
+    font-size: 14px;
+}
+
+.descriptionViaje p:nth-child(1) {
+    text-align: center;
+}
+
+.descriptionViaje p:nth-child(2) {
+    margin-top: 10px;
+}
+
+.proximamente {
+    display: none;
+}
+
+.proximamente p {
+    color: rgb(39, 39, 39);
+}
+
+.contIMGhv {
+    min-width: 100%;
+    height: 150px;
+    display: flex;
+}
+
+.contIMGhv img {
+    width: 100%;
+    object-fit: cover;
+}
+
+@media (min-width:1010px) {
+    .contenedorViajes {
+        justify-content: center;
+    }
+
+    .viaje {
+        max-width: 400px;
+    }
+}
+
+@media (max-width:1010px) {
+    .contenedorViajes {
+        width: 780px;
+        gap: 10px;
+        padding: 6px;
+    }
+
+    .viaje {
+        width: 49%;
+
+    }
+}
+
+@media (max-width:793px) {
+    .contenedorViajes {
+        width: 650px;
+        gap: 10px;
+    }
+
+    .viaje {
+        width: 48%;
+    }
+}
+
+@media (max-width:664px) {
+    .contenedorViajes {
+        width: 100%;
+    }
+
+    .viaje {
+        width: 100%;
+        margin: 10px 0px;
+        box-shadow: 0px 0px 5px #b6b6b6b9;
+        background-color: #f0f0f0;
+    }
+}
+
+/*sobre mi*/
+.contenedorSobreMi {
+    width: 100%;
+    color: #050505ea;
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    margin-top: 40px;
+
+}
+
+.tittleDescription {
+    text-align: center;
+    padding: 15px;
+    font-family: Cormorant Garamond;
+}
+
+.desc {
+    color: #1d1d1d;
+    width: 83%;
+    margin: auto;
+    text-align: center;
+    font-family: Cormorant Garamond;
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+@media (min-width:700px) {
+    .tittleDescription {
+        font-size: 26px;
+    }
+
+    .desc {
+        font-size: 23px;
+    }
+}
+
+@media (max-width:700px) {
+    .tittleDescription {
+        font-size: 23px;
+    }
+
+    .desc {
+        font-size: 18px;
+    }
+}
+
+.desc a {
+    text-decoration: none;
+    color: #ca172f;
+    font-weight: bold;
+}
+
+.contenedorSobreMi.scrolled {
+    opacity: 1;
+    transform: translatey(-30px);
+    transition: 1s;
+}
+
+.contenedorSectionViajes.scrolled .desc {
+    opacity: 1;
+    transform: translatey(-30px);
+}
+
+
+/*****FIN SOBRE MI****/
+/*videoYT*/
+/*tittle*/
+
+/**Opciones**/
+.contenedorIMGOP {
+    padding: 40px 0px;
+    width: 100%;
+    display: flex;
+    margin: auto;
+    justify-content: space-around;
+}
+
+.logoOP {
+    width: 40%;
+    box-shadow: 0px 0px 13px #2e2e2eea;
+    height: 210px;
+    display: flex;
+    border-radius: 9px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.logoMaxO {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    border-radius: 9px;
+}
+
+.logoMaxO img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 9px;
+    filter: brightness(103%);
+}
+
+.logoOText {
+    background-color: #1d30428f;
+    position: absolute;
+    z-index: 500;
+    color: #ebebeb;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    height: 100%;
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+/**FOOTER**/
+.unicfoot {
+    width: 100%;
+    padding: 30px;
+    font-size: 13px;
+    background-color: rgb(20, 20, 20);
+    color: rgb(182, 182, 182);
+}
+
+.containerFrame {
+    width: 230px;
+    margin: auto;
+}
+
+.pContI {
+    text-align: center;
+}
+
+.contI {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tittleContainerFrame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid rgb(58, 58, 58);
+    margin: auto;
+    padding: 5px;
+    color: rgb(197, 197, 197);
+    font-size: 15px;
+}
+
+@media (max-width:700px) {
+    .tittleContainerFrame {
+        width: 64%;
+    }
+}
+
+/*sección contactos*/
+.pContI i {
+    margin-top: 8px;
+    font-size: 28px;
+    width: 36px;
+}
+
+.ipFoot a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+    color: #1a1a1aea;
+    color: rgb(202, 202, 202);
+    text-decoration: none;
+}
+
+.ipFoot p {
+    width: 160px;
+    margin-top: 8px;
+}
+
+.ipFoot a:hover {
+    font-size: 13.5px;
+    color: rgb(207, 173, 154);
+}
+
+.copyText {
+    text-align: center;
+    margin: 30px 0px 4px;
+}
