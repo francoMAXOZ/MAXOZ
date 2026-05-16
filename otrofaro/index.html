@@ -1,0 +1,4459 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iglesia Bautista El Faro | Experiencia Inmersiva</title>
+
+    <!-- Fonts & Icons -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;600&family=Playfair+Display:ital,wght@0,400;1,700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP & Swiper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0%;
+            padding: 0%;
+            box-sizing: border-box;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- HEADER -->
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #94a3b8;
+            --white: #ffffff;
+            --soft-bg: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --cubic: cubic-bezier(0.23, 1, 0.32, 1);
+            --brutal-cubic: cubic-bezier(0.16, 1, 0.3, 1);
+            /* Curva ultra rápida al inicio y suave al final */
+            --faro-yellow: rgba(253, 224, 71, 0.15);
+            /* Luz amarilla sutil */
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 40px 0;
+            transition: 0.8s var(--cubic);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        header.scrolled {
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        header.scrolled .logo,
+        header.scrolled .nav-links a {
+            color: var(--primary);
+        }
+
+        header.scrolled .logo-mark {
+            background: var(--primary);
+        }
+
+        /* Revelado del diamante del logo */
+        .logo-mark {
+            opacity: 0;
+            animation: markReveal 1s var(--cubic) forwards;
+            animation-delay: 0.1s;
+        }
+
+        .header-container {
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        /* --- CONTENEDOR LOGO Y EFECTO DE LUZ ROTATIVA --- */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: white;
+            transition: 0.5s;
+            position: relative;
+            /* Contexto para la luz */
+        }
+
+        .logoMasP {
+            position: relative;
+            padding: 4px 10px;
+            overflow: hidden;
+            /* Mantiene la luz dentro del perímetro del texto */
+        }
+
+        .reveal-wrap h1 {
+            letter-spacing: -0.4px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        /* Asegurar que el texto flote limpio sobre la luz */
+        .logo h1,
+        .contenidoDebajo {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo h1 {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .contenidoDebajo p {
+            font-size: 12px;
+            margin: 0;
+        }
+
+
+        /** NAV **/
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 0.75rem;
+            letter-spacing: 2.5px;
+            transition: 0.3s;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            letter-spacing: 4px;
+        }
+
+        /* --- BOTONES DE ACCIÓN --- */
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-header {
+            height: 45px;
+            padding: 0 25px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.4s var(--cubic), background 0.4s var(--cubic), color 0.4s var(--cubic), border-color 0.4s var(--cubic);
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Estilo Radio */
+        .radio-btn {
+            background: var(--white);
+            color: var(--primary);
+            border: none;
+        }
+
+        .radio-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Estilo Login */
+        .login-btn {
+            background: var(--glass);
+            color: white;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .login-btn:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        header.scrolled .login-btn {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* --- HERO RE-EVOLVED --- */
+        .hero-swiper {
+            width: 100%;
+            height: 100vh;
+            background: #000;
+        }
+
+        .swiper-slide {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            transform: scale(1.1);
+            transition: transform 12s ease-out;
+        }
+
+        .swiper-slide-active .slide-bg {
+            transform: scale(1.3) rotate(0.01deg);
+        }
+
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+        }
+
+        .slide-content {
+            text-align: center;
+            color: white;
+            z-index: 10;
+            max-width: 1000px;
+        }
+
+        .slide-content span {
+            display: block;
+            font-size: 0.9rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .slide-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 12vw, 9rem);
+            font-weight: 400;
+            line-height: 0.85;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: scale(0.9);
+            filter: blur(10px);
+        }
+
+        .swiper-slide-active h1 {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0);
+            transition: 1.5s var(--cubic) 0.3s;
+        }
+
+        .swiper-slide-active span {
+            opacity: 0.6;
+            transform: translateY(0);
+            transition: 1s var(--cubic) 0.1s;
+        }
+
+        /* --- SWIPER CUSTOM UI --- */
+        .swiper-pagination-bullet {
+            width: 40px;
+            height: 2px;
+            border-radius: 0;
+            background: rgba(255, 255, 255, 0.3);
+            opacity: 1;
+            transition: 0.5s;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--white);
+            width: 80px;
+        }
+
+        /* --- ANIMACIONES BRUTALES DE ENTRADA (REVEAL) --- */
+        .reveal-wrap {
+            overflow: hidden;
+            display: block;
+        }
+
+        /* Revelado de textos del Logo */
+        .logo h1,
+        .contenidoDebajo p {
+            opacity: 0;
+            transform: translateY(100%);
+            animation: brutalReveal 1.2s var(--brutal-cubic) forwards;
+        }
+
+        .logo h1 {
+            animation-delay: 0.2s;
+        }
+
+        .contenidoDebajo p {
+            animation-delay: 0.35s;
+        }
+
+
+
+        /* Revelado de enlaces de navegación */
+        .nav-links a {
+            opacity: 0;
+            transform: translateY(15px);
+            animation: linkReveal 0.8s var(--brutal-cubic) forwards;
+        }
+
+        .nav-links a:nth-child(1) {
+            animation-delay: 0.4s;
+        }
+
+        .nav-links a:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .nav-links a:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .nav-links a:nth-child(4) {
+            animation-delay: 0.7s;
+        }
+
+        /* Revelado de botones de acción */
+        .btn-header {
+            opacity: 0;
+            transform: translateX(30px) scaleX(0.9);
+            animation: btnReveal 1s var(--brutal-cubic) forwards;
+        }
+
+        .radio-btn {
+            animation-delay: 0.5s;
+        }
+
+        .login-btn {
+            animation-delay: 0.6s;
+        }
+
+        /* Keyframes de Entrada */
+        @keyframes brutalReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+
+            30% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes markReveal {
+            0% {
+                opacity: 0;
+                transform: rotate(45deg) scale(0);
+            }
+
+            100% {
+                opacity: 1;
+                transform: rotate(45deg) scale(1);
+            }
+        }
+
+        @keyframes linkReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            100% {
+                opacity: 0.8;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes btnReveal {
+            0% {
+                opacity: 0;
+                transform: translateX(30px) scaleX(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0) scaleX(1);
+            }
+        }
+
+        @media (max-width:1040px) {
+
+            .login-btn span,
+            .radio-btn span {
+                display: none;
+            }
+
+        }
+
+        @media (max-width: 900px) {
+            .header-container {
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width:440px) {
+            .logo {
+                gap: 2px;
+            }
+
+            .btn-header {
+                padding: 0px 10px;
+            }
+
+            .header-actions {
+                display: none;
+            }
+
+            .need-help-section {
+                padding: 40px 10px;
+            }
+
+            .help-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+    </style>
+
+    <header id="main-nav">
+        <div class="header-container">
+            <div class="logo">
+                <div class="logoImg">
+                    <!-- SVG Faro Negro (Por defecto) -->
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="20px" height="40px"
+                        viewBox="0 0 330.000000 617.000000" preserveAspectRatio="xMidYMid meet">
+
+                        <g transform="translate(0.000000,617.000000) scale(0.100000,-0.100000)" fill="#ffffffd8"
+                            stroke="none">
+                            <path d="M1807 6113 c-14 -27 -30 -67 -36 -90 -11 -40 -12 -41 -64 -48 -81
+-11 -225 -62 -299 -106 -36 -22 -89 -65 -118 -95 -49 -52 -100 -145 -100 -183
+0 -15 -12 -22 -52 -30 -139 -30 -279 -87 -352 -144 -48 -38 -80 -106 -71 -148
+17 -78 127 -154 292 -202 l52 -16 -10 25 c-31 82 8 137 143 203 172 84 375
+123 648 123 190 0 323 -17 470 -58 150 -43 278 -111 305 -165 17 -33 19 -82 5
+-110 -13 -24 -18 -24 74 6 102 33 149 58 202 107 143 132 21 277 -306 365
+l-103 28 -12 42 c-29 98 -105 187 -217 256 -67 40 -212 91 -293 102 l-50 6
+-28 79 c-38 107 -49 114 -80 53z" />
+                            <path d="M1630 5289 c-168 -19 -311 -58 -364 -100 -25 -20 -26 -24 -26 -135 0
+-63 4 -114 9 -114 5 0 71 7 148 16 190 23 695 23 883 0 74 -9 140 -16 147 -16
+9 0 11 26 7 103 -7 144 -6 141 -66 169 -150 71 -484 106 -738 77z" />
+                            <path d="M1475 4874 c-403 -38 -682 -138 -745 -269 -18 -37 -20 -49 -11 -83
+20 -71 119 -144 271 -198 l65 -24 -3 -47 c-2 -44 -18 -168 -57 -448 -21 -151
+-65 -488 -65 -503 0 -6 40 32 89 85 325 358 753 616 1371 828 91 31 199 68
+240 82 249 85 359 191 314 303 -45 113 -266 212 -569 254 -270 38 -628 46
+-900 20z" />
+                            <path d="M2450 4080 c-158 -49 -471 -185 -626 -273 -593 -333 -961 -771 -1128
+-1345 -38 -129 -64 -251 -95 -447 -12 -71 -23 -142 -26 -157 -2 -16 -3 -28 -1
+-28 1 0 18 21 36 48 123 173 352 412 520 543 373 289 856 538 1370 704 63 21
+119 41 123 45 7 7 -60 526 -92 720 -6 30 -13 80 -16 110 -11 95 -12 97 -65 80z" />
+                            <path d="M2535 2956 c-417 -136 -829 -334 -1130 -544 -231 -162 -511 -424
+-652 -612 -307 -412 -489 -908 -520 -1422 l-6 -108 -59 0 c-67 0 -104 -16
+-142 -60 -24 -29 -26 -39 -26 -121 l0 -89 1650 0 1651 0 -3 112 -3 112 -40 23
+-40 23 -1422 0 c-794 0 -1423 4 -1423 9 0 17 197 239 329 371 567 565 1310
+999 2083 1215 54 15 57 18 53 43 -3 15 -25 160 -50 322 -25 162 -49 322 -55
+355 -5 33 -16 107 -25 165 -36 243 -36 240 -53 239 -10 -1 -62 -16 -117 -33z" />
+                            <path d="M2695 1670 c-263 -84 -422 -149 -669 -272 -256 -128 -456 -248 -680
+-406 -222 -158 -375 -289 -570 -486 l-120 -121 602 -3 c331 -1 871 -1 1200 0
+l598 3 -37 245 c-52 345 -69 453 -84 550 -7 47 -28 184 -46 305 -18 121 -35
+223 -38 227 -3 3 -73 -15 -156 -42z" />
+                        </g>
+                    </svg>
+
+                    <!-- PNG Faro Color (Al hacer scroll) -->
+                    <img class="faro-png" src="faro.png" alt="Faro">
+                    <style>
+                        .logoImg {
+                            width: 20px;
+                            height: 40px;
+                            position: relative;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+
+                        /* Forzamos que no herede ninguna rotación de scripts externos */
+
+                        .logoImg svg,
+                        .logoImg img {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 20px;
+                            height: 40px;
+                            object-fit: contain;
+                            transition: opacity 0.5s ease, visibility 0.5s ease;
+
+                        }
+
+                        /* Estado inicial: se muestra el SVG, se oculta el PNG */
+                        .logoImg .faro-png {
+                            opacity: 0;
+                            visibility: hidden;
+                        }
+
+                        .logoImg .faro-svg {
+                            opacity: 1;
+                            visibility: visible;
+                        }
+
+                        body.scrolled .logoImg .faro-png {
+                            opacity: 1;
+                            visibility: visible;
+                        }
+
+                        body.scrolled .logoImg .faro-svg {
+                            opacity: 0;
+                            visibility: hidden;
+                        }
+                    </style>
+
+                </div>
+                <div class="logoMasP">
+                    <div class="reveal-wrap">
+                        <h1>EL FARO</h1>
+                    </div>
+                    <div class="reveal-wrap">
+                        <div class="contenidoDebajo">
+                            <p>Iglesia Bautista</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contNavHeader">
+                <nav class="nav-links">
+                    <a href="#">INICIO</a>
+                    <a href="#">HISTORIA</a>
+                    <a href="#">ACTIVIDADES</a>
+                    <a href="#">NOTICIAS</a>
+                </nav>
+                <!-- aaa -->
+                <!-- TU BOTÓN HAMBURGUESA ORIGINAL (INTACTO, SOLO SE AGREGA EL ONCLICK) -->
+                <div class="menuNavCel" onclick="toggleMenuSiuu()" style="cursor: pointer;">
+                    <div class="contMenuSvg">
+                        <svg width="35px" height="35px" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 6H20M4 12H20M4 18H20" stroke="#ffffff9c" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+
+                    <style>
+                        .menuNavCel {
+                            display: none;
+                            animation: fadeInMenu 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                        }
+
+                        .contMenuSvg svg path {
+                            transition: stroke 0.9s ease;
+                        }
+
+                        .contMenuSvg svg path {
+                            transition: stroke 0.9s ease;
+                        }
+
+                        body.scrolled .contMenuSvg svg path {
+                            stroke: #0f172a;
+                        }
+
+                        /* Animación de aparición (Fade + Slide) */
+                        @keyframes fadeInMenu {
+                            0% {
+                                opacity: 0;
+                                transform: translateY(-10px);
+                            }
+
+                            100% {
+                                opacity: 1;
+                                transform: translateY(0);
+                            }
+                        }
+
+                        @media (min-width:905px) {
+                            .siuu-overlay {
+                                display: none !important;
+                            }
+                        }
+
+                        @media (max-width:905px) {
+
+                            .nav-links,
+                            .header-actions {
+                                display: none;
+                            }
+
+                            .menuNavCel {
+                                display: block;
+                            }
+                        }
+                    </style>
+                </div>
+
+                <!-- EL OVERLAY DEL MENÚ MÓVIL (TOTALMENTE INDEPENDIENTE) -->
+                <div class="siuu-overlay" id="siuuOverlay">
+                    <!-- Botón para cerrar -->
+                    <button class="siuu-close-btn" onclick="toggleMenuSiuu()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+
+                    <!-- Flechas de navegación -->
+                    <button class="siuu-nav-arrow siuu-prev" id="siuuPrevArrow" onclick="moveSliderSiuu('prev')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+
+                    <button class="siuu-nav-arrow siuu-next" id="siuuNextArrow" onclick="moveSliderSiuu('next')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+
+                    <div class="siuu-container">
+                        <!-- Slider de Páginas -->
+                        <div class="siuu-slider" id="siuuSlider">
+
+                            <!-- PÁGINA 1: Grilla móvil (2 arriba, 2 medio, 2 abajo) -->
+                            <div class="siuu-page">
+                                <div class="siuu-grid">
+
+                                    <a href="#estudio" class="siuu-link" onclick="toggleMenuSiuu()">
+                                        <svg class="siuu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z">
+                                            </path>
+                                        </svg>
+                                        <h2>Estudio Bíblico</h2>
+                                    </a>
+
+                                    <a href="#radio" class="siuu-link" onclick="toggleMenuSiuu()">
+                                        <svg class="siuu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <path
+                                                d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9M19.1 4.9c3.9 3.9 3.9 10.3 0 14.2M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5">
+                                            </path>
+                                            <circle cx="12" cy="12" r="2"></circle>
+                                        </svg>
+                                        <h2>Escuchar Radio</h2>
+                                    </a>
+
+                                    <a href="#redes" class="siuu-link" onclick="toggleMenuSiuu()">
+                                        <svg class="siuu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
+                                            </path>
+                                        </svg>
+                                        <h2>Redes</h2>
+                                    </a>
+
+                                    <a href="#nosotros" class="siuu-link" onclick="toggleMenuSiuu()">
+                                        <svg class="siuu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
+                                        <h2>Sobre Nosotros</h2>
+                                    </a>
+
+                                    <a href="#info" class="siuu-link" onclick="toggleMenuSiuu()">
+                                        <svg class="siuu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                        </svg>
+                                        <h2>Información</h2>
+                                    </a>
+
+                                    <a href="#cuenta" class="siuu-link" onclick="toggleMenuSiuu()">
+                                        <svg class="siuu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                        <h2>Mi Cuenta</h2>
+                                    </a>
+
+                                </div>
+                            </div>
+
+                            <!-- PÁGINA 2 -->
+                            <div class="siuu-page">
+                                <div class="siuu-grid">
+
+                                    <a href="#donaciones" class="siuu-link" onclick="toggleMenuSiuu()">
+                                        <svg class="siuu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                        </svg>
+                                        <h2>Donaciones</h2>
+                                    </a>
+
+                                    <a href="#horarios" class="siuu-link" onclick="toggleMenuSiuu()">
+                                        <svg class="siuu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>
+                                        <h2>Horarios</h2>
+                                    </a>
+
+                                    <a href="#contacto" class="siuu-link" onclick="toggleMenuSiuu()">
+                                        <svg class="siuu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <path
+                                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                            </path>
+                                            <polyline points="22,6 12,13 2,6"></polyline>
+                                        </svg>
+                                        <h2>Contacto</h2>
+                                    </a>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Indicadores de Puntitos -->
+                        <div class="siuu-dots-container">
+                            <div class="siuu-dots" id="siuuDots"></div>
+                        </div>
+                    </div>
+
+                    <style>
+                        :root {
+                            --siuu-primary: #ff3e6c;
+                            --siuu-bg-gradient: linear-gradient(180deg, rgba(10, 15, 30, 0.96) 0%, rgba(15, 23, 42, 0.98) 100%);
+                            --siuu-text: #ffffff;
+                        }
+
+                        .siuu-overlay {
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100vw;
+                            height: 100vh;
+                            background: var(--siuu-bg-gradient);
+                            backdrop-filter: blur(12px);
+                            -webkit-backdrop-filter: blur(12px);
+                            z-index: 99999;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            opacity: 0;
+                            pointer-events: none;
+                            transition: opacity 0.4s ease;
+                        }
+
+                        .siuu-overlay.siuu-active {
+                            opacity: 1;
+                            pointer-events: auto;
+                        }
+
+                        .siuu-close-btn {
+                            position: absolute;
+                            top: 25px;
+                            right: 25px;
+                            width: 48px;
+                            height: 48px;
+                            border-radius: 50%;
+                            background-color: var(--siuu-primary);
+                            color: var(--siuu-text);
+                            border: none;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            z-index: 10055;
+                            box-shadow: 0 4px 20px rgba(255, 62, 108, 0.4);
+                            transition: transform 0.2s ease;
+                        }
+
+                        .siuu-close-btn:active {
+                            transform: scale(0.9);
+                        }
+
+                        .siuu-nav-arrow {
+                            position: absolute;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            width: 45px;
+                            height: 45px;
+                            border-radius: 50%;
+                            background-color: rgba(255, 255, 255, 0.1);
+                            border: 1px solid rgba(255, 255, 255, 0.2);
+                            color: var(--siuu-text);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+                            z-index: 10033;
+                            transition: all 0.3s ease;
+                        }
+
+                        .siuu-nav-arrow:active {
+                            background-color: var(--siuu-primary);
+                            border-color: var(--siuu-primary);
+                            transform: translateY(-50%) scale(0.9);
+                        }
+
+                        .siuu-nav-arrow.siuu-prev {
+                            left: 20px;
+                        }
+
+                        .siuu-nav-arrow.siuu-next {
+                            right: 20px;
+                        }
+
+                        .siuu-nav-arrow.siuu-disabled {
+                            opacity: 0.2;
+                            pointer-events: none;
+                        }
+
+                        .siuu-container {
+                            width: 100%;
+                            height: 75vh;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                            align-items: center;
+                            box-sizing: border-box;
+                        }
+
+                        .siuu-slider {
+                            display: flex;
+                            width: 100%;
+                            height: 100%;
+                            overflow-x: auto;
+                            scroll-snap-type: x mandatory;
+                            scroll-behavior: smooth;
+                        }
+
+                        .siuu-slider::-webkit-scrollbar {
+                            display: none;
+                        }
+
+                        .siuu-slider {
+                            -ms-overflow-style: none;
+                            scrollbar-width: none;
+                        }
+
+                        .siuu-page {
+                            min-width: 100%;
+                            max-width: 100%;
+                            padding: 0 80px;
+                            scroll-snap-align: center;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            box-sizing: border-box;
+                        }
+
+                        .siuu-grid {
+                            display: grid;
+                            grid-template-columns: repeat(2, 1fr);
+                            grid-template-rows: repeat(3, 1fr);
+                            gap: 20px;
+                            width: 100%;
+                            max-width: 400px;
+                            align-items: stretch;
+                        }
+
+                        .siuu-link {
+                            text-align: center;
+                            text-decoration: none;
+                            color: var(--siuu-text);
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            background: rgba(255, 255, 255, 0.05);
+                            padding: 22px 10px;
+                            border-radius: 14px;
+                            border: 1px solid rgba(255, 255, 255, 0.15);
+                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                            transition: all 0.2s ease;
+                            height: 100%;
+                            box-sizing: border-box;
+                        }
+
+                        .siuu-icon {
+                            width: 32px;
+                            height: 32px;
+                            color: var(--siuu-primary);
+                            margin-bottom: 10px;
+                            transform: scale(0.6);
+                            opacity: 0;
+                            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s;
+                            flex-shrink: 0;
+                        }
+
+                        .siuu-link h2 {
+                            font-size: 0.9rem;
+                            font-weight: 700;
+                            text-transform: uppercase;
+                            margin: 0;
+                            line-height: 1.2;
+                            transform: translateY(15px);
+                            opacity: 0;
+                            transition: all 0.5s ease 0.2s;
+                        }
+
+                        .siuu-overlay.siuu-active .siuu-icon {
+                            transform: scale(1);
+                            opacity: 1;
+                        }
+
+                        .siuu-overlay.siuu-active .siuu-link h2 {
+                            transform: translateY(0);
+                            opacity: 1;
+                        }
+
+                        .siuu-link:active {
+                            background: rgba(255, 255, 255, 0.12);
+                            transform: scale(0.95);
+                        }
+
+                        .siuu-dots-container {
+                            width: 100%;
+                            display: flex;
+                            justify-content: center;
+                            padding-bottom: 25px;
+                            z-index: 1001;
+                        }
+
+                        .siuu-dots {
+                            display: flex;
+                            gap: 14px;
+                            background: rgba(0, 0, 0, 0.4);
+                            padding: 8px 16px;
+                            border-radius: 20px;
+                        }
+
+                        .siuu-dot {
+                            width: 8px;
+                            height: 8px;
+                            border-radius: 50%;
+                            background-color: rgba(255, 255, 255, 0.25);
+                            transition: all 0.3s ease;
+                            cursor: pointer;
+                        }
+
+                        .siuu-dot.siuu-active {
+                            background-color: var(--siuu-primary);
+                            transform: scale(1.4);
+                            box-shadow: 0 0 10px var(--siuu-primary);
+                        }
+
+                        @media (max-width: 400px) {
+                            .siuu-page {
+                                padding: 0 45px;
+                            }
+
+                            .siuu-grid {
+                                gap: 10px 8px;
+                            }
+
+                            .siuu-link {
+                                padding: 12px 5px;
+                                border-radius: 10px;
+                            }
+
+                            .siuu-icon {
+                                width: 26px;
+                                height: 26px;
+                                margin-bottom: 6px;
+                            }
+
+                            .siuu-link h2 {
+                                font-size: 0.78rem;
+                            }
+
+                            .siuu-nav-arrow.siuu-prev {
+                                left: 5px;
+                            }
+
+                            .siuu-nav-arrow.siuu-next {
+                                right: 5px;
+                            }
+
+                            .siuu-nav-arrow {
+                                width: 38px;
+                                height: 38px;
+                            }
+                        }
+                    </style>
+                </div>
+
+
+            </div>
+
+
+            <div class="header-actions">
+                <button class="btn-header radio-btn">
+                    <i data-lucide="radio"></i>
+                    <span>Radio</span>
+                </button>
+                <button class="btn-header login-btn">
+                    <i data-lucide="user"></i>
+                    <span>Acceso</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!--- HEADER --->
+    <main>
+        <!-- hero -->
+        <div class="swiper hero-swiper" style="width: 100%;">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="slide-bg"
+                        style="background-image: url('https://plus.unsplash.com/premium_photo-1714575080994-61d113cb183c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                    </div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <span>COMUNIDAD ESPIRITUAL</span>
+                        <h1>Claridad<br>Interior.</h1>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="slide-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1515162305285-0293e4767cc2?q=80&w=2000');">
+                    </div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <span>BIENVENIDO A CASA</span>
+                        <h1>Luz en tu<br>Camino.</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <!-- QUIENES SOMOS -->
+        <section class="faro-qs-global">
+            <div class="faro-qs-content-wrapper">
+
+                <div class="faro-qs-hero">
+                    <div class="faro-qs-hero-content" style="padding: 24px;">
+                        <span class="faro-qs-eyebrow">ESTABLECIDOS EN 2030</span>
+                        <h2 class="faro-qs-giant-title">Nuestra Esencia</h2>
+                    </div>
+                </div>
+
+                <div class="faro-qs-main-block">
+
+                    <div class="faro-qs-nav">
+                        <button class="faro-qs-tab active" onclick="faroUpdate(this, 'nosotros')">¿QUIÉNES
+                            SOMOS?</button>
+                        <button class="faro-qs-tab" onclick="faroUpdate(this, 'mision')">NUESTRA MISIÓN</button>
+                        <button class="faro-qs-tab" onclick="faroUpdate(this, 'vision')">NUESTRA VISIÓN</button>
+                    </div>
+                    <style>
+                        @media (max-width:370px) {
+                            .faro-qs-nav {
+                                gap: 4px !important;
+                            }
+                        }
+                    </style>
+
+                    <div class="faro-qs-grid">
+                        <div class="faro-qs-left">
+                            <span class="faro-qs-label" id="faro-tag">SOBRE NOSOTROS</span>
+                            <h3 class="faro-qs-h3" id="faro-title">Luz en la Ciudad, esperanza en el alma.</h3>
+
+                            <div class="faro-qs-stats">
+                                <div class="faro-qs-stat">
+                                    <div class="faro-qs-num-wrap">
+                                        <span class="faro-qs-number">20</span>
+                                        <span class="faro-qs-plus">+</span>
+                                    </div>
+                                    <span class="faro-qs-caption">AÑOS DE SERVICIO</span>
+                                </div>
+                                <div class="faro-qs-stat">
+                                    <div class="faro-qs-num-wrap">
+                                        <span class="faro-qs-number">1.2</span>
+                                        <span class="faro-qs-k">k</span>
+                                    </div>
+                                    <span class="faro-qs-caption">VIDAS IMPACTADAS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faro-qs-right">
+                            <div class="faro-qs-text-content">
+                                <div id="faro-text-container">
+                                    <p class="faro-qs-p">Somos una comunidad bautista comprometida con la <strong>verdad
+                                            bíblica</strong> y el servicio al prójimo. Nuestra historia es el reflejo de
+                                        la gracia de Dios actuando en cada vida que cruza nuestras puertas.</p>
+                                    <p class="faro-qs-p">En El Faro, creemos que cada persona tiene un propósito divino.
+                                        Aquí encontrarás un lugar para crecer, servir y pertenecer.</p>
+                                </div>
+                                <a href="#" class="faro-qs-btn">CONOCER MÁS <i data-lucide="arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faro-qs-marquee-section">
+                    <div class="faro-qs-marquee-wrap">
+                        <div class="faro-qs-track">
+                            <div class="faro-qs-slide"><img
+                                    src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=800"></div>
+                            <div class="faro-qs-slide"><img
+                                    src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=800"></div>
+                            <div class="faro-qs-slide"><img
+                                    src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                            </div>
+                            <div class="faro-qs-slide"><img
+                                    src="https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=800"></div>
+                            <div class="faro-qs-slide"><img
+                                    src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=800"></div>
+                            <div class="faro-qs-slide"><img
+                                    src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=800"></div>
+                            <div class="faro-qs-slide"><img
+                                    src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=800"></div>
+                            <div class="faro-qs-slide"><img
+                                    src="https://images.unsplash.com/photo-1543059152-4293c0a01a35?q=80&w=800"></div>
+                            <div class="faro-qs-slide"><img
+                                    src="https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=800"></div>
+                            <div class="faro-qs-slide"><img
+                                    src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=800"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <style>
+            :root {
+                --faro-dark-alpha: rgba(15, 23, 42, 0.91);
+                --faro-accent: #64748b;
+                --faro-white: #ffffff;
+                --faro-text-gray: #94a3b8;
+                --faro-p-text: #cbd5e1;
+            }
+
+            /* CONTENEDOR PADRE PRINCIPAL */
+            .faro-qs-global {
+                width: 100%;
+                position: relative;
+                overflow: hidden;
+                box-sizing: border-box;
+                /* clip-path asegura que el background ::before fixed no sangre hacia afuera de esta sección si hay otras secciones arriba/abajo */
+                clip-path: inset(0 0 0 0);
+            }
+
+            /* FONDO COMPLETAMENTE FIJO, AISLADO Y RESPONSIVO AL VIEWPORT */
+            .faro-qs-global::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                z-index: 1;
+                background-image: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), url('https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+                background-position: center center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                pointer-events: none;
+                /* No interfiere con clicks o selecciones */
+            }
+
+            /* EL CONTENIDO FLUYE POR ENCIMA SIN ALTERAR EL FONDO */
+            .faro-qs-content-wrapper {
+                position: relative;
+                z-index: 2;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .faro-qs-hero {
+                min-height: 80vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: transparent;
+            }
+
+            .faro-qs-hero-content {
+                text-align: center;
+            }
+
+            .faro-qs-eyebrow {
+                font-family: 'Outfit', sans-serif;
+                letter-spacing: 12px;
+                font-size: 0.75rem;
+                color: var(--faro-white);
+                opacity: 0.8;
+            }
+
+            .faro-qs-giant-title {
+                font-family: 'Playfair Display', serif;
+                font-size: clamp(3.5rem, 12vw, 8rem);
+                line-height: 0.9;
+                margin-top: 20px;
+                color: var(--faro-white);
+            }
+
+            .faro-qs-main-block {
+                position: relative;
+                background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, var(--faro-dark-alpha) 15%, var(--faro-dark-alpha) 100%);
+                padding: 100px 40px 60px;
+                width: 100%;
+                backdrop-filter: blur(3px);
+                box-sizing: border-box;
+            }
+
+            .faro-qs-nav {
+                max-width: 1400px;
+                margin: 0 auto 50px;
+                display: flex;
+                gap: 30px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .faro-qs-tab {
+                background: none;
+                border: none;
+                color: var(--faro-text-gray);
+                font-family: 'Outfit', sans-serif;
+                font-size: 0.75rem;
+                letter-spacing: 3px;
+                padding: 15px 0;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+            .faro-qs-tab.active {
+                color: var(--faro-white);
+                border-bottom: 2px solid var(--faro-white);
+            }
+
+            .faro-qs-grid {
+                display: grid;
+                grid-template-columns: 1.1fr 0.9fr;
+                gap: 60px;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+
+            .faro-qs-label {
+                font-family: 'Outfit', sans-serif;
+                letter-spacing: 6px;
+                font-size: 0.7rem;
+                color: var(--faro-accent);
+                display: block;
+                margin-bottom: 20px;
+            }
+
+            .faro-qs-h3 {
+                font-family: 'Playfair Display', serif;
+                font-size: clamp(2rem, 5vw, 3.5rem);
+                line-height: 1.1;
+                margin-bottom: 30px;
+                color: var(--faro-white);
+            }
+
+            .faro-qs-stats {
+                display: flex;
+                gap: 50px;
+                margin-top: 30px;
+            }
+
+            .faro-qs-num-wrap {
+                display: flex;
+                align-items: baseline;
+            }
+
+            .faro-qs-number {
+                font-family: 'Outfit', sans-serif;
+                font-size: 3.5rem;
+                font-weight: 700;
+                line-height: 1;
+                color: var(--faro-white);
+            }
+
+            .faro-qs-plus,
+            .faro-qs-k {
+                font-size: 1.8rem;
+                color: var(--faro-accent);
+                margin-left: 2px;
+            }
+
+            .faro-qs-caption {
+                font-family: 'Outfit', sans-serif;
+                font-size: 0.65rem;
+                letter-spacing: 3px;
+                color: var(--faro-text-gray);
+                text-transform: uppercase;
+                display: block;
+            }
+
+            .faro-qs-p {
+                font-family: 'Outfit', sans-serif;
+                font-size: 1.1rem;
+                line-height: 1.8;
+                color: var(--faro-p-text);
+                margin-bottom: 20px;
+            }
+
+            .faro-qs-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 15px;
+                color: var(--faro-white);
+                text-decoration: none;
+                font-size: 0.8rem;
+                letter-spacing: 3px;
+                border-bottom: 1px solid var(--faro-accent);
+                transition: 0.4s;
+            }
+
+            .faro-qs-marquee-section {
+                background: var(--faro-dark-alpha);
+                padding-bottom: 100px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .faro-qs-marquee-wrap {
+                width: 100%;
+                overflow: hidden;
+                padding: 40px 0;
+            }
+
+            .faro-qs-track {
+                display: flex;
+                width: max-content;
+            }
+
+            .faro-qs-track.is-animating {
+                animation: faroQsScroll 35s linear infinite;
+            }
+
+            .faro-qs-slide {
+                width: 400px;
+                height: 260px;
+                padding: 0 15px;
+                flex-shrink: 0;
+                box-sizing: border-box;
+            }
+
+            .faro-qs-slide img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 4px;
+                filter: grayscale(1) brightness(0.7);
+                transition: 0.6s;
+            }
+
+            .faro-qs-slide:hover img {
+                filter: grayscale(0) brightness(1);
+                transform: scale(1.02);
+            }
+
+            @keyframes faroQsScroll {
+                0% {
+                    transform: translateX(0);
+                }
+
+                100% {
+                    transform: translateX(-50%);
+                }
+            }
+
+            @media (max-width: 1100px) {
+                .faro-qs-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .faro-qs-main-block {
+                    padding: 60px 20px;
+                }
+            }
+        </style>
+
+
+        <!-- STREAMING & GRID -->
+        <style>
+            /***/
+            /* --- STREAMING SECTION --- */
+            .grid-section {
+                padding: 120px 40px;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+
+            .stream-grid {
+                display: grid;
+                grid-template-columns: 1fr 1.2fr;
+                gap: 80px;
+                align-items: center;
+            }
+
+            .stream-card {
+                background: var(--soft-bg);
+                padding: 60px;
+                border-radius: 4px;
+                border: 1px solid #e2e8f0;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .stream-card h2 {
+                font-family: 'Playfair Display';
+                font-size: 3rem;
+                margin-bottom: 20px;
+                font-weight: 400;
+            }
+
+            .btn-action {
+                display: inline-flex;
+                align-items: center;
+                gap: 15px;
+                background: var(--primary);
+                color: white;
+                padding: 20px 40px;
+                text-decoration: none;
+                margin-top: 30px;
+                font-size: 0.8rem;
+                letter-spacing: 2px;
+                transition: 0.4s;
+            }
+
+            .btn-action:hover {
+                background: var(--accent);
+                transform: translateX(10px);
+            }
+
+            /***/
+            /* --- EXTENSIÓN IDENTIDAD FACEBOOK LIVE --- */
+
+            .btn-action.fb-btn-style {
+                background: var(--fb-blue);
+                box-shadow: 0 10px 20px rgba(24, 119, 242, 0.15);
+            }
+
+            .btn-action.fb-btn-style:hover {
+                background: var(--primary);
+                transform: translateX(10px);
+            }
+
+            /* Contenedor del Embed del Live */
+            .fb-embed-placeholder {
+                background: #0b1220 !important;
+                aspect-ratio: 16/9;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                border-radius: 12px !important;
+                box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25) !important;
+                border: 1px solid rgba(24, 119, 242, 0.15);
+                position: relative;
+                overflow: hidden;
+                padding: 30px;
+                box-sizing: border-box;
+                text-align: center;
+                width: 100%;
+            }
+
+            /* Efecto de radar pulsante de señal detrás del logo */
+            .fb-embed-placeholder::before {
+                content: '';
+                position: absolute;
+                width: 140px;
+                height: 140px;
+                background: var(--fb-blue);
+                border-radius: 50%;
+                opacity: 0.05;
+                animation: fb-pulse 3s infinite var(--cubic);
+                z-index: 1;
+            }
+
+            .fb-live-status-wrap {
+                position: relative;
+                z-index: 2;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+            }
+
+            /* Insignia dinámica de estado */
+            .live-badge-offline {
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                color: var(--white);
+                font-size: 0.65rem;
+                font-weight: 600;
+                letter-spacing: 3px;
+                text-transform: uppercase;
+                padding: 6px 16px;
+                border-radius: 50px;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            /* Punto indicador fuera de línea */
+            .live-badge-offline::before {
+                content: '';
+                width: 6px;
+                height: 6px;
+                background: var(--accent);
+                border-radius: 50%;
+            }
+
+            .fb-info-title {
+                color: var(--white);
+                font-family: 'Outfit', sans-serif;
+                font-size: 1.25rem;
+                font-weight: 500;
+                margin: 5px 0 0 0;
+                letter-spacing: -0.5px;
+            }
+
+            /* --- CONTENEDOR CONTRA DESBORDES DE VIEWPORT --- */
+            .grid-section {
+                width: 100%;
+                overflow: hidden;
+                position: relative;
+                box-sizing: border-box;
+            }
+
+            .stream-grid {
+                width: 100%;
+                max-width: 1400px;
+                margin: 0 auto;
+                box-sizing: border-box;
+            }
+
+            /* --- ANIMACIONES CON CONTROL DE DESBORDE TOTAL --- */
+
+            /* Entrada por Izquierda para la tarjeta de texto */
+            .stream-card.reveal-left {
+                opacity: 0;
+                transform: translateX(-100px) skewX(-4deg);
+                transition: transform 1.2s var(--cubic), opacity 1.2s linear;
+            }
+
+            .stream-card.reveal-left.active {
+                opacity: 1;
+                transform: translateX(0) skewX(0deg);
+            }
+
+            /* Entrada por Derecha en perspectiva para el reproductor */
+            .fb-embed-placeholder.reveal-right {
+                opacity: 0;
+                transform: translateX(100px) rotateY(-12deg);
+                transform-origin: right center;
+                transition: transform 1.4s var(--cubic), opacity 1.4s linear;
+            }
+
+            .fb-embed-placeholder.reveal-right.active {
+                opacity: 1;
+                transform: translateX(0) rotateY(0deg);
+            }
+
+            /* --- KEYFRAMES --- */
+            @keyframes fb-pulse {
+                0% {
+                    transform: scale(0.8);
+                    opacity: 0.15;
+                }
+
+                50% {
+                    opacity: 0.05;
+                }
+
+                100% {
+                    transform: scale(1.6);
+                    opacity: 0;
+                }
+            }
+
+            /* Ajuste de gaps responsivo y blindaje de layouts móviles */
+            @media (max-width: 1100px) {
+                .stream-grid {
+                    gap: 40px;
+                }
+
+                .stream-card {
+                    padding: 40px;
+                }
+            }
+
+            /* RESPONSIVE SEGURO: Evita que el translateX rompa el ancho en celulares */
+            @media (max-width: 768px) {
+                .stream-card.reveal-left {
+                    transform: translateY(20px) skewX(0deg);
+                    /* Desplazamiento vertical limpio, sin salirse del eje X */
+                }
+
+                .fb-embed-placeholder.reveal-right {
+                    transform: translateY(20px) rotateY(0deg);
+                    /* Mata la rotación 3D pesada y el desborde lateral */
+                }
+
+                .stream-card.reveal-left.active,
+                .fb-embed-placeholder.reveal-right.active {
+                    transform: translateY(0);
+                }
+            }
+        </style>
+        <!-- STREAMING & GRID -->
+        <section class="grid-section">
+            <div class="stream-grid">
+
+                <div class="stream-card reveal-left">
+                    <span class="live-tag">EN VIVO</span>
+                    <h2>Seguinos en Facebook Live</h2>
+                    <p class="stream-desc">
+                        Conectate con nosotros todos los Martes 10:00 AM y Miércoles 7:00 PM. No dejes que la distancia
+                        te impida recibir la palabra.
+                    </p>
+                    <a href="#" class="btn-action fb-btn-style">
+                        IR AL STREAMING <i data-lucide="external-link" size="16"></i>
+                    </a>
+                </div>
+
+                <div class="fb-embed-placeholder reveal-right">
+                    <div class="fb-live-status-wrap">
+                        <i data-lucide="facebook" color="#1877f2" size="56" fill="#1877f2"></i>
+                        <div class="live-badge-offline">Fuera de Línea</div>
+                        <h3 class="fb-info-title">Próximo Live: Domingo - 19:20hs</h3>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <style>
+            /* VARIABLES Y CONFIGURACIÓN BASE */
+            :root {
+                --fb-blue: #1877f2;
+                --text-light: #ffffff;
+                --bg-card: rgba(255, 255, 255, 0.05);
+                --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .grid-section {
+                width: 100%;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 80px 20px;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+
+            /* CONTENEDOR GRID RESPONSIVO */
+            .stream-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px;
+                align-items: center;
+            }
+
+            /* TARJETA DE TEXTO */
+            .stream-card {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+            }
+
+            .live-tag {
+                color: var(--fb-blue);
+                font-weight: 600;
+                letter-spacing: 3px;
+                font-size: 0.7rem;
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .stream-desc {
+                opacity: 0.7;
+                margin-bottom: 30px;
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+
+            /* CONTENEDOR ESPECÍFICO PARA EVITAR REFLOW (Aspect Ratio Fijo 16:9) */
+            .fb-embed-placeholder {
+                width: 100%;
+                aspect-ratio: 16 / 9;
+                background: var(--bg-card);
+                border-radius: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                box-sizing: border-box;
+            }
+
+            .fb-live-status-wrap {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .live-badge-offline {
+                background: #3a3a3a;
+                color: var(--text-light);
+                padding: 6px 12px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            .fb-info-title {
+                font-size: 1.1rem;
+                margin: 0;
+                font-weight: 500;
+            }
+
+            /* ESTILOS DE ANIMACIÓN (Intersection Observer) */
+            .reveal-left {
+                opacity: 0;
+                transform: translateX(-50px);
+                transition: var(--transition-smooth);
+            }
+
+            .reveal-right {
+                opacity: 0;
+                transform: translateX(50px);
+                transition: var(--transition-smooth);
+            }
+
+            .reveal-left.active,
+            .reveal-right.active {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            /* MEDIA QUERIES (TABLETS Y SITES MÓVILES) */
+            @media (max-width: 992px) {
+                .stream-grid {
+                    grid-template-columns: 1fr;
+                    gap: 50px;
+                }
+
+                .grid-section {
+                    padding: 60px 20px;
+                }
+
+                .stream-card {
+                    align-items: center;
+                    text-align: center;
+                }
+            }
+
+            @media (max-width: 600px) {
+                .grid-section {
+                    padding: 40px 15px;
+                }
+
+                .fb-embed-placeholder {
+                    aspect-ratio: 4 / 3;
+                    /* Ajuste opcional para pantallas muy chicas si el contenido lo requiere */
+                }
+            }
+        </style>
+
+        <!-- SECCIÓN EVENTOS -->
+        <style>
+            :root {
+                --faro-bg-dark: #090d16;
+                --faro-white: #ffffff;
+                --faro-gray-text: #94a3b8;
+                --faro-neon-purple: #a855f7;
+                --faro-cubic-brutal: cubic-bezier(0.34, 1.56, 0.64, 1);
+                /* Curva elástica con rebote brutal */
+            }
+
+            /* --- SECCIÓN EVENTOS (CONTENEDOR BASE) --- */
+            .events-section {
+                position: relative;
+                background: var(--faro-bg-dark);
+                padding: 120px 40px;
+                max-width: 1400px;
+                margin: 0 auto;
+                overflow: hidden;
+            }
+
+            .events-section-title {
+                display: block;
+                font-family: 'Outfit', sans-serif;
+                font-size: 0.75rem;
+                letter-spacing: 4px;
+                color: var(--faro-gray-text);
+                text-transform: uppercase;
+                margin-bottom: 40px;
+                font-weight: 600;
+            }
+
+            /* Capa de iluminación trasera (Desenfoques de fondo) */
+            .party-blur-bg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 1;
+            }
+
+            .party-light-spot {
+                position: absolute;
+                border-radius: 50%;
+                filter: blur(140px);
+                opacity: 0.15;
+            }
+
+            .spot-1 {
+                top: 10%;
+                left: 20%;
+                width: 300px;
+                height: 300px;
+                background: var(--faro-neon-purple);
+            }
+
+            .spot-2 {
+                bottom: 20%;
+                right: 15%;
+                width: 350px;
+                height: 350px;
+                background: #ec4899;
+            }
+
+            .spot-3 {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 250px;
+                height: 250px;
+                background: #3b82f6;
+            }
+
+            /* Estructura del Grid de Eventos */
+            .events-grid {
+                position: relative;
+                z-index: 2;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+            }
+
+            .events-right-col {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            /* --- TARJETA DE EVENTO INTEGRADA --- */
+            .event-card {
+                position: relative;
+                display: block;
+                border-radius: 20px;
+                overflow: hidden;
+                text-decoration: none;
+                box-sizing: border-box;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                background: rgba(30, 41, 59, 0.4);
+
+                /* --- ESTADO INICIAL PARA ANIMACIÓN BRUTAL (DIFERENTE) --- */
+                opacity: 0;
+                transform: scale(0.85) rotateX(10deg);
+                /* Arranca más chica y rota levemente en eje X */
+                transform-origin: center center;
+                transition: transform 1.1s var(--faro-cubic-brutal), opacity 1.1s linear, border-color 0.4s;
+            }
+
+            /* Tarjeta izquierda toma su alto estricto */
+            .events-grid>.event-card {
+                height: 500px;
+            }
+
+            /* Tarjetas de la columna derecha toman su altura exacta */
+            .events-right-col .event-card {
+                height: 238px;
+            }
+
+            /* --- CLASE DE REVELADO INFINITO (DISPARADA POR INTERSECTION OBSERVER) --- */
+            .event-card.reveal-visible {
+                opacity: 1;
+                transform: scale(1) rotateX(0deg);
+            }
+
+            /* Delays calculados para escalonamiento dinámico */
+            .event-card.delay-1 {
+                transition-delay: 0s;
+            }
+
+            .event-card.delay-2 {
+                transition-delay: 0.15s;
+            }
+
+            .event-card.delay-3 {
+                transition-delay: 0.3s;
+            }
+
+            /* Contenedores internos de elementos */
+            .event-image-wrap {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+            }
+
+            .event-bg-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                filter: brightness(0.5) contrast(1.1);
+                transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .event-body {
+                position: relative;
+                z-index: 2;
+                height: 100%;
+                padding: 32px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                box-sizing: border-box;
+                background: linear-gradient(to top, rgba(9, 13, 22, 0.95) 0%, rgba(9, 13, 22, 0.2) 100%);
+            }
+
+            .event-date {
+                font-family: 'Outfit', sans-serif;
+                font-size: 0.7rem;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                color: var(--faro-neon-purple);
+                font-weight: 600;
+                display: block;
+                margin-bottom: 12px;
+            }
+
+            .event-body h3 {
+                font-family: 'Playfair Display', serif;
+                color: var(--faro-white);
+                font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+                font-weight: 400;
+                margin: 0;
+                line-height: 1.3;
+            }
+
+            .event-link-text {
+                font-family: 'Outfit', sans-serif;
+                font-size: 0.75rem;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                color: var(--faro-white);
+                opacity: 0.8;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                transition: gap 0.3s, color 0.3s, opacity 0.3s;
+            }
+
+            /* --- EFECTOS HOVER PREMIUM --- */
+            .event-card:hover {
+                border-color: rgba(168, 85, 247, 0.5);
+            }
+
+            .event-card:hover .event-bg-img {
+                transform: scale(1.05);
+            }
+
+            .event-card:hover .event-link-text {
+                color: var(--faro-neon-purple);
+                opacity: 1;
+                gap: 14px;
+            }
+
+            /* --- RESPONSIVE ADAPTATIVO SIN DESPLOME DE DISEÑO --- */
+            @media (max-width: 900px) {
+                .events-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .events-grid>.event-card {
+                    height: 400px;
+                }
+
+                .events-right-col .event-card {
+                    height: 250px;
+                }
+            }
+
+            @media (max-width: 600px) {
+                .events-section {
+                    padding: 80px 20px;
+                }
+
+                .event-body {
+                    padding: 24px;
+                }
+            }
+        </style>
+        <!-- SECCIÓN DE EVENTOS COMPACTA Y SIN FILTRACIONES -->
+        <section class="events-section" id="faro-events-block">
+
+            <!-- Capa de iluminación trasera -->
+            <div class="party-blur-bg">
+                <div class="party-light-spot spot-1"></div>
+                <div class="party-light-spot spot-2"></div>
+                <div class="party-light-spot spot-3"></div>
+            </div>
+
+            <span class="events-section-title">Próximos Eventos</span>
+
+            <div class="events-grid">
+                <!-- TARJETA IZQUIERDA (500px de Alto) -->
+                <a href="#" class="event-card delay-1">
+                    <div class="event-image-wrap">
+                        <img class="event-bg-img"
+                            src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200" alt="Evento">
+                    </div>
+                    <div class="event-body">
+                        <div>
+                            <span class="event-date">Sábado 23 de Mayo / 19:00 HS</span>
+                            <h3>Domingo: Santa Cena</h3>
+                        </div>
+                        <span class="event-link-text">Ver Detalles &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- COLUMNA DERECHA (Dividida en dos bloques simétricos) -->
+                <div class="events-right-col">
+                    <!-- EVENTO ARRIBA (238px de Alto) -->
+                    <a href="#" class="event-card delay-2">
+                        <div class="event-image-wrap">
+                            <img class="event-bg-img"
+                                src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=800"
+                                alt="Evento">
+                        </div>
+                        <div class="event-body">
+                            <div>
+                                <span class="event-date">Jueves 04 de Junio / 20:30 HS</span>
+                                <h3>Noche de Adoración y Vigilia</h3>
+                            </div>
+                            <span class="event-link-text">Participar &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- EVENTO ABAJO (238px de Alto) -->
+                    <a href="#" class="event-card delay-3">
+                        <div class="event-image-wrap">
+                            <img class="event-bg-img"
+                                src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=800"
+                                alt="Evento">
+                        </div>
+                        <div class="event-body">
+                            <div>
+                                <span class="event-date">Domingos / 11:00 HS</span>
+                                <h3>Reunión General en Comunidad</h3>
+                            </div>
+                            <span class="event-link-text">Saber Más &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACTIVIDADES -->
+        <style>
+            :root {
+                --faro-bg-dark: #090d16;
+                --faro-card-dark: rgba(30, 41, 59, 0.7);
+                --faro-neon-purple: #a855f7;
+                --faro-neon-pink: #ec4899;
+                --faro-white: #ffffff;
+                --faro-gray-text: #94a3b8;
+                --cubic-premium: cubic-bezier(0.16, 1, 0.3, 1);
+                /* Curva más brutal y marcada */
+            }
+
+            /* --- SECCIÓN ACTIVIDADES --- */
+            .activities-section {
+                background: var(--faro-bg-dark);
+                padding: 120px 40px;
+                max-width: 1400px;
+                margin: 0 auto;
+                position: relative;
+            }
+
+            .activities-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                margin-bottom: 40px;
+            }
+
+            .activities-title-wrap {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .activities-section-tag {
+                font-family: 'Outfit', sans-serif;
+                font-size: 0.75rem;
+                letter-spacing: 4px;
+                color: var(--faro-gray-text);
+                text-transform: uppercase;
+                margin-bottom: 8px;
+                font-weight: 600;
+            }
+
+            .activities-main-title {
+                font-family: 'Playfair Display', serif;
+                font-size: clamp(2rem, 4vw, 3rem);
+                color: var(--faro-white);
+                margin: 0;
+                font-weight: 400;
+            }
+
+            /* Controles del Slider */
+            .slider-controls {
+                display: flex;
+                gap: 12px;
+            }
+
+            .slider-arrow {
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background: var(--faro-card-dark);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                color: var(--faro-white);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background 0.3s, border-color 0.3s, transform 0.2s;
+            }
+
+            .slider-arrow:hover {
+                background: var(--faro-white);
+                color: var(--faro-bg-dark);
+                border-color: var(--faro-white);
+                transform: translateY(-2px);
+            }
+
+            /* --- CONTENEDOR SLIDER --- */
+            .activities-slider-track {
+                display: flex;
+                gap: 24px;
+                overflow-x: auto;
+                scroll-behavior: smooth;
+                scroll-snap-type: x mandatory;
+                scrollbar-width: none;
+                padding-bottom: 30px;
+            }
+
+            .activities-slider-track::-webkit-scrollbar {
+                display: none;
+            }
+
+            /* --- TARJETA DE ACTIVIDAD (ENTRADA DESDE ABAJO) --- */
+            .activity-card {
+                flex: 0 0 calc((100% - (24px * 3)) / 4);
+                scroll-snap-align: start;
+                background: var(--faro-card-dark);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                border-radius: 16px;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                height: 420px;
+                box-sizing: border-box;
+                text-decoration: none;
+
+                /* Estado inicial: Escondido abajo y mudo */
+                opacity: 0;
+                transform: translateY(60px);
+                /* Más abajo para acentuar la subida */
+                transition: transform 0.9s var(--cubic-premium), opacity 0.9s var(--cubic-premium), border-color 0.3s;
+            }
+
+            /* Clase que inyecta el Observer al entrar a pantalla */
+            .activity-card.reveal-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Delays escalonados para la subida */
+            .activity-card.delay-1 {
+                transition-delay: 0s;
+            }
+
+            .activity-card.delay-2 {
+                transition-delay: 0.1s;
+            }
+
+            .activity-card.delay-3 {
+                transition-delay: 0.2s;
+            }
+
+            .activity-card.delay-4 {
+                transition-delay: 0.3s;
+            }
+
+            .activity-card.delay-5 {
+                transition-delay: 0.4s;
+            }
+
+            .activity-img-wrap {
+                width: 100%;
+                height: 200px;
+                overflow: hidden;
+            }
+
+            .activity-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                filter: brightness(0.85);
+                transition: transform 0.8s var(--cubic-premium);
+            }
+
+            .activity-body {
+                padding: 24px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                flex-grow: 1;
+                box-sizing: border-box;
+            }
+
+            .activity-meta {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .activity-time {
+                font-family: 'Outfit', sans-serif;
+                font-size: 0.65rem;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                color: var(--faro-neon-pink);
+                font-weight: 600;
+            }
+
+            .activity-body h3 {
+                font-family: 'Outfit', sans-serif;
+                font-size: 1.25rem;
+                color: var(--faro-white);
+                font-weight: 500;
+                margin: 8px 0 0 0;
+                line-height: 1.3;
+            }
+
+            .activity-description {
+                font-family: 'Outfit', sans-serif;
+                font-size: 0.85rem;
+                color: var(--faro-gray-text);
+                margin: 12px 0 0 0;
+                line-height: 1.5;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .activity-action {
+                font-family: 'Outfit', sans-serif;
+                font-size: 0.7rem;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                color: var(--faro-white);
+                opacity: 0.7;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                margin-top: 16px;
+                transition: gap 0.3s, opacity 0.3s, color 0.3s;
+            }
+
+            .activity-card:hover {
+                border-color: rgba(168, 85, 247, 0.4);
+            }
+
+            .activity-card:hover .activity-img {
+                transform: scale(1.04);
+            }
+
+            .activity-card:hover .activity-action {
+                opacity: 1;
+                color: var(--faro-neon-purple);
+                gap: 10px;
+            }
+
+            /* --- INDICADOR DE SCROLL (DOTS) --- */
+            .slider-dots-indicator {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 30px;
+            }
+
+            .slider-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.15);
+                transition: width 0.4s var(--cubic-premium), background 0.4s var(--cubic-premium);
+            }
+
+            .slider-dot.dot-active {
+                background: var(--faro-white);
+                width: 24px;
+                /* Se estira el dot activo para indicar posición */
+                border-radius: 4px;
+            }
+
+            /* --- RESPONSIVE --- */
+            @media (max-width: 1024px) {
+                .activity-card {
+                    flex: 0 0 calc((100% - 24px) / 2);
+                }
+            }
+
+            @media (max-width: 640px) {
+                .activities-section {
+                    padding: 80px 20px;
+                }
+
+                .activity-card {
+                    flex: 0 0 100%;
+                }
+
+                .slider-controls {
+                    display: none;
+                }
+            }
+        </style>
+        <!-- SECCIÓN DE ACTIVIDADES SLIDER RE-EVOLVED -->
+        <section class="activities-section" id="faro-activities-block">
+            <div class="activities-header">
+                <div class="activities-title-wrap">
+                    <span class="activities-section-tag">Nuestra Agenda</span>
+                    <h2 class="activities-main-title">Actividades de Comunidad</h2>
+                </div>
+
+                <div class="slider-controls">
+                    <button class="slider-arrow" id="slide-prev" aria-label="Anterior">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+                    <button class="slider-arrow" id="slide-next" aria-label="Siguiente">
+                        <i data-lucide="arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Track del Slider -->
+            <div class="activities-slider-track" id="activities-track">
+
+                <!-- ACTIVIDAD 1 -->
+                <a href="#" class="activity-card delay-1">
+                    <div class="activity-img-wrap">
+                        <img class="activity-img"
+                            src="https://images.unsplash.com/photo-1502444330042-d1a1ddf9bb5b?q=80&w=873&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Reunión de Jóvenes">
+                    </div>
+                    <div class="activity-body">
+                        <div class="activity-meta">
+                            <span class="activity-time">Sábado — 16:00 HS</span>
+                            <h3>Reunión de Jóvenes</h3>
+                            <p class="activity-description">Un espacio dinámico de conexión, música y charlas enfocadas
+                                en los desafíos actuales.</p>
+                        </div>
+                        <span class="activity-action">Saber Más &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- ACTIVIDAD 2 -->
+                <a href="#" class="activity-card delay-2">
+                    <div class="activity-img-wrap">
+                        <img class="activity-img"
+                            src="https://images.unsplash.com/photo-1528828085966-aff4e01c5f2b?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Culto General">
+                    </div>
+                    <div class="activity-body">
+                        <div class="activity-meta">
+                            <span class="activity-time">Domingo — 19:00 HS</span>
+                            <h3>Culto General</h3>
+                            <p class="activity-description">Toda la familia reunida para adorar y compartir una palabra
+                                de fe y crecimiento espiritual.</p>
+                        </div>
+                        <span class="activity-action">Saber Más &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- ACTIVIDAD 3 -->
+                <a href="#" class="activity-card delay-3">
+                    <div class="activity-img-wrap">
+                        <img class="activity-img"
+                            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=600"
+                            alt="Estudio Bíblico">
+                    </div>
+                    <div class="activity-body">
+                        <div class="activity-meta">
+                            <span class="activity-time">Miércoles — 20:00 HS</span>
+                            <h3>Estudio Bíblico</h3>
+                            <p class="activity-description">Profundizamos juntos en las escrituras de manera práctica y
+                                participativa en comunidad.</p>
+                        </div>
+                        <span class="activity-action">Saber Más &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- ACTIVIDAD 4 -->
+                <a href="#" class="activity-card delay-4">
+                    <div class="activity-img-wrap">
+                        <img class="activity-img"
+                            src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=600"
+                            alt="Faro Kids">
+                    </div>
+                    <div class="activity-body">
+                        <div class="activity-meta">
+                            <span class="activity-time">Domingo — 11:00 HS</span>
+                            <h3>Faro Kids</h3>
+                            <p class="activity-description">Clases interactivas y juegos pensados especialmente para que
+                                los más chicos aprendan valores.</p>
+                        </div>
+                        <span class="activity-action">Saber Más &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- ACTIVIDAD 5 -->
+                <a href="#" class="activity-card delay-5">
+                    <div class="activity-img-wrap">
+                        <img class="activity-img"
+                            src="https://images.unsplash.com/photo-1590682680695-43b964a3ae17?q=80&w=700&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Acción Social">
+                    </div>
+                    <div class="activity-body">
+                        <div class="activity-meta">
+                            <span class="activity-time">Viernes — 18:00 HS</span>
+                            <h3>Acción Social</h3>
+                            <p class="activity-description">Salidas de asistencia, talleres abiertos y soporte activo a
+                                los barrios de nuestra zona.</p>
+                        </div>
+                        <span class="activity-action">Saber Más &rarr;</span>
+                    </div>
+                </a>
+
+            </div>
+
+            <!-- Indicador de Scroll Dinámico (Dots) -->
+            <div class="slider-dots-indicator" id="slider-dots">
+                <div class="slider-dot dot-active"></div>
+                <div class="slider-dot"></div>
+            </div>
+        </section>
+
+
+        <!-- SECCIÓN: FORMULARIO DE ASISTENCIA Y ORACIÓN -->
+        <section class="church-light-section" id="prayer-station">
+            <!-- Capa de atmósfera luminosa y natural -->
+            <div class="light-ambient-glow"></div>
+            <div class="light-texture-overlay"></div>
+
+            <div class="light-container">
+
+                <!-- Encabezado completamente animado con transiciones independientes -->
+                <div class="light-header">
+                    <span class="light-tag reveal-dynamic-text text-delay-1">Un espacio para vos</span>
+                    <h2 class="light-title reveal-dynamic-text text-delay-2">¿Cómo podemos acompañarte hoy?</h2>
+                    <p class="light-subtitle reveal-dynamic-text text-delay-3">
+                        Creemos en una comunidad que sostiene, restaura y camina unida. Compartinos tu necesidad para
+                        que podamos interceder y ayudarte con amor y confidencialidad.
+                    </p>
+                </div>
+
+                <div class="light-content-grid">
+
+                    <!-- Selectores Laterales Orgánicos -->
+                    <div class="light-selection-column">
+                        <div class="light-card reveal-dynamic active" onclick="switchLightTab('oracion', this)">
+                            <div class="light-card-accent"></div>
+                            <div class="light-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                                    <path d="M12 8v8" />
+                                    <path d="M8 12h8" />
+                                </svg>
+                            </div>
+                            <div class="light-card-text">
+                                <h3>Pedir Oración</h3>
+                                <p>Un espacio de fe para interceder juntos por tus motivos personales.</p>
+                            </div>
+                        </div>
+
+                        <div class="light-card reveal-dynamic" onclick="switchLightTab('consejeria', this)">
+                            <div class="light-card-accent"></div>
+                            <div class="light-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                                </svg>
+                            </div>
+                            <div class="light-card-text">
+                                <h3>Soporte Pastoral</h3>
+                                <p>Encontrá contención, escucha activa y guía espiritual en privado.</p>
+                            </div>
+                        </div>
+
+                        <div class="light-card reveal-dynamic" onclick="switchLightTab('ayuda', this)">
+                            <div class="light-card-accent"></div>
+                            <div class="light-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                </svg>
+                            </div>
+                            <div class="light-card-text">
+                                <h3>Asistencia Práctica</h3>
+                                <p>Nuestro canal de acción social coordinado para momentos de vulnerabilidad.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulario Integrado Calidez -->
+                    <div class="light-form-wrapper reveal-dynamic">
+                        <form id="lightChurchForm" onsubmit="handleLightFormSubmit(event)">
+                            <input type="hidden" id="light_req_type" value="oracion">
+
+                            <div class="light-form-row">
+                                <div class="light-input-group">
+                                    <label for="light_name">Nombre completo</label>
+                                    <input type="text" id="light_name" required placeholder="Ej. Mateo Rossi">
+                                </div>
+                                <div class="light-input-group">
+                                    <label for="light_email">Correo electrónico</label>
+                                    <input type="email" id="light_email" required placeholder="mateo@ejemplo.com">
+                                </div>
+                            </div>
+
+                            <div class="light-form-row">
+                                <div class="light-input-group">
+                                    <label for="light_phone">Teléfono / WhatsApp</label>
+                                    <input type="tel" id="light_phone" placeholder="Ej. +54 9 11 1234-5678">
+                                </div>
+                                <div class="light-input-group">
+                                    <label for="light_privacy">Preferencia de Privacidad</label>
+                                    <select id="light_privacy">
+                                        <option value="confidencial">Reserva Absoluta (Solo el equipo pastoral)</option>
+                                        <option value="equipo">Compartir con nuestra red de intercesores</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="light-input-group">
+                                <label id="light-message-label" for="light_message">Detalle de tu petición de
+                                    oración</label>
+                                <textarea id="light_message" rows="5" required
+                                    placeholder="Escribí aquí los detalles de tu solicitud con total tranquilidad..."></textarea>
+                            </div>
+
+                            <button type="submit" class="light-btn-submit">
+                                <span id="light-btn-text">Enviar Petición de Oración</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="22" y1="2" x2="11" y2="13" />
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <style>
+            /* --- DISEÑO EDITORIAL DE LUZ Y VIDA --- */
+            .church-light-section {
+                --sage-green: #5a7a68;
+                --sage-hover: #486253;
+                --bg-organic: #fbf9f4;
+                --bg-white-pure: #ffffff;
+                --text-dark: #2d312e;
+                --text-soft-muted: #6b726e;
+                --border-organic: rgba(90, 122, 104, 0.12);
+                --radius-pro: 16px;
+                position: relative;
+                padding: 150px 24px;
+                background-color: var(--bg-organic);
+                overflow: hidden;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                min-height: 900px;
+            }
+
+            @media(max-width:380px) {
+                .church-light-section {
+                    padding: 90px 14px;
+                }
+
+                .light-title {
+                    font-size: 30px !important;
+                }
+            }
+
+            .church-light-section *,
+            .church-light-section *::before,
+            .church-light-section *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+
+            .light-container {
+                max-width: 1120px;
+                margin: 0 auto;
+                position: relative;
+                z-index: 3;
+            }
+
+            /* Encabezado */
+            .light-header {
+                text-align: center;
+                max-width: 620px;
+                margin: 0 auto 76px auto;
+            }
+
+            .light-tag {
+                display: inline-block;
+                color: var(--sage-green);
+                background: rgba(90, 122, 104, 0.08);
+                font-size: 12px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 2.5px;
+                padding: 6px 18px;
+                border-radius: 50px;
+                margin-bottom: 24px;
+            }
+
+            .light-title {
+                font-size: 42px;
+                font-weight: 800;
+                color: var(--text-dark);
+                line-height: 1.2;
+                letter-spacing: -0.5px;
+                margin-bottom: 20px;
+            }
+
+            .light-subtitle {
+                color: var(--text-soft-muted);
+                font-size: 17px;
+                line-height: 1.65;
+            }
+
+            /* Grid Organizador */
+            .light-content-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 40px;
+                align-items: start;
+            }
+
+            @media (min-width: 992px) {
+                .light-content-grid {
+                    grid-template-columns: 4.3fr 7.7fr;
+                }
+            }
+
+            /* Tarjetas de Selección Lateral */
+            .light-selection-column {
+                display: flex;
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .light-card {
+                position: relative;
+                background: var(--bg-white-pure);
+                border: 1px solid var(--border-organic);
+                border-radius: var(--radius-pro);
+                padding: 26px;
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(142, 153, 147, 0.03);
+                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .light-card-accent {
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+                background-color: var(--sage-green);
+                border-top-left-radius: var(--radius-pro);
+                border-bottom-left-radius: var(--radius-pro);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .light-card:hover {
+                transform: translateX(4px);
+                box-shadow: 0 10px 24px rgba(142, 153, 147, 0.08);
+            }
+
+            .light-card.active {
+                background: var(--bg-white-pure);
+                border-color: rgba(90, 122, 104, 0.3);
+                box-shadow: 0 12px 28px rgba(90, 122, 104, 0.08);
+            }
+
+            .light-card.active .light-card-accent {
+                opacity: 1;
+            }
+
+            .light-icon-wrapper {
+                width: 46px;
+                height: 46px;
+                background: rgba(90, 122, 104, 0.04);
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--text-soft-muted);
+                flex-shrink: 0;
+                transition: all 0.3s;
+            }
+
+            .light-icon-wrapper svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            .light-card.active .light-icon-wrapper {
+                background: var(--sage-green);
+                color: var(--bg-white-pure);
+            }
+
+            .light-card-text h3 {
+                font-size: 18px;
+                font-weight: 700;
+                color: var(--text-dark);
+                margin-bottom: 5px;
+            }
+
+            .light-card-text p {
+                color: var(--text-soft-muted);
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            /* Bloque del Formulario */
+            .light-form-wrapper {
+                background: var(--bg-white-pure);
+                border: 1px solid var(--border-organic);
+                border-radius: var(--radius-pro);
+                padding: 52px;
+                box-shadow: 0 20px 48px rgba(142, 153, 147, 0.06);
+            }
+
+            @media (max-width: 576px) {
+                .light-form-wrapper {
+                    padding: 32px 20px;
+                }
+            }
+
+            .light-form-row {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 28px;
+                margin-bottom: 28px;
+            }
+
+            @media (min-width: 768px) {
+                .light-form-row {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+
+            .light-input-group {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 28px;
+            }
+
+            .light-form-row .light-input-group {
+                margin-bottom: 0;
+            }
+
+            .light-input-group label {
+                font-size: 13px;
+                font-weight: 700;
+                color: var(--text-dark);
+                letter-spacing: 0.5px;
+            }
+
+            .light-input-group input,
+            .light-input-group select,
+            .light-input-group textarea {
+                background: #fdfdfd;
+                border: 1px solid rgba(90, 122, 104, 0.2);
+                border-radius: 8px;
+                color: var(--text-dark);
+                padding: 15px 18px;
+                font-size: 15px;
+                font-family: inherit;
+                outline: none;
+                transition: all 0.25s ease;
+                width: 100%;
+            }
+
+            .light-input-group input:focus,
+            .light-input-group select:focus,
+            .light-input-group textarea:focus {
+                border-color: var(--sage-green);
+                background: var(--bg-white-pure);
+                box-shadow: 0 0 0 4px rgba(90, 122, 104, 0.08);
+            }
+
+            .light-input-group input::placeholder,
+            .light-input-group textarea::placeholder {
+                color: #a0aab2;
+            }
+
+            .light-input-group select {
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b726e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 18px center;
+                background-size: 15px;
+                padding-right: 48px;
+            }
+
+            .light-btn-submit {
+                background: var(--sage-green);
+                border: none;
+                border-radius: 8px;
+                color: var(--bg-white-pure);
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
+                font-size: 16px;
+                font-weight: 700;
+                padding: 18px 36px;
+                transition: all 0.25s ease;
+                width: 100%;
+            }
+
+            .light-btn-submit:hover {
+                background: var(--sage-hover);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(90, 122, 104, 0.2);
+            }
+
+            .light-btn-submit:active {
+                transform: translateY(0);
+            }
+
+            .light-btn-submit svg {
+                width: 16px;
+                height: 16px;
+            }
+
+
+            /* --- SISTEMA OBSERVER DE ANIMACIÓN BIDIRECCIONAL --- */
+
+            /* Tarjetas y contenedor de formulario */
+            .reveal-dynamic {
+                opacity: 0.15;
+                transform: scale(0.98) translateY(20px);
+                visibility: hidden;
+                transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                    visibility 0.7s;
+                will-change: transform, opacity;
+            }
+
+            .reveal-dynamic.is-in-view {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                visibility: visible;
+            }
+
+            /* Líneas de texto individuales del encabezado */
+            .reveal-dynamic-text {
+                opacity: 0;
+                transform: translateY(15px);
+                visibility: hidden;
+                transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                    visibility 0.6s;
+                will-change: transform, opacity;
+            }
+
+            .reveal-dynamic-text.is-in-view {
+                opacity: 1;
+                transform: translateY(0);
+                visibility: visible;
+            }
+
+            /* Delays secuenciales armónicos para el texto */
+            .reveal-dynamic-text.text-delay-1 {
+                transition-delay: 0.02s;
+            }
+
+            .reveal-dynamic-text.text-delay-2 {
+                transition-delay: 0.1s;
+            }
+
+            .reveal-dynamic-text.text-delay-3 {
+                transition-delay: 0.18s;
+            }
+
+            /* Delays secuenciales para bloques de interacción lateral y formulario */
+            .light-selection-column .reveal-dynamic:nth-child(1) {
+                transition-delay: 0.05s;
+            }
+
+            .light-selection-column .reveal-dynamic:nth-child(2) {
+                transition-delay: 0.12s;
+            }
+
+            .light-selection-column .reveal-dynamic:nth-child(3) {
+                transition-delay: 0.19s;
+            }
+
+            .light-form-wrapper.reveal-dynamic {
+                transition-delay: 0.12s;
+            }
+        </style>
+
+
+
+        <!-- REDES -->
+        <section class="social-premium-section" id="social-connect-station">
+            <!-- Atmósfera de iluminación profunda y sutil -->
+            <div class="premium-glow-radial"></div>
+
+            <div class="premium-container">
+
+                <!-- Encabezado Masivo y Compacto -->
+                <div class="premium-header">
+                    <h2 class="premium-title reveal-premium-text text-delay-1">Conectá con la comunidad.</h2>
+                    <p class="premium-subtitle reveal-premium-text text-delay-2">
+                        Seguí nuestras transmisiones en vivo, palabra de aliento y el día a día de nuestra iglesia a
+                        través de los canales oficiales.
+                    </p>
+                </div>
+
+                <!-- Grid de Alta Densidad Visual -->
+                <div class="premium-grid">
+
+                    <!-- YouTube -->
+                    <a href="https://www.youtube.com/@TuCanalIglesia" target="_blank" rel="noopener noreferrer"
+                        class="premium-card reveal-premium-block">
+                        <div class="premium-card-overlay"></div>
+                        <div class="premium-card-content">
+                            <div class="premium-icon-box box-yt">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+                                    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+                                </svg>
+                            </div>
+                            <div class="premium-meta">
+                                <h3>YouTube</h3>
+                                <p class="premium-handle">@IglesiaEnVivo</p>
+                            </div>
+                            <div class="premium-action-arrow">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/TuPaginaIglesia" target="_blank" rel="noopener noreferrer"
+                        class="premium-card reveal-premium-block">
+                        <div class="premium-card-overlay"></div>
+                        <div class="premium-card-content">
+                            <div class="premium-icon-box box-fb">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                                </svg>
+                            </div>
+                            <div class="premium-meta">
+                                <h3>Facebook</h3>
+                                <p class="premium-handle">IglesiaComunidad</p>
+                            </div>
+                            <div class="premium-action-arrow">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/TuUsuarioIglesia" target="_blank" rel="noopener noreferrer"
+                        class="premium-card reveal-premium-block">
+                        <div class="premium-card-overlay"></div>
+                        <div class="premium-card-content">
+                            <div class="premium-icon-box box-ig">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                                </svg>
+                            </div>
+                            <div class="premium-meta">
+                                <h3>Instagram</h3>
+                                <p class="premium-handle">@IglesiaOficial</p>
+                            </div>
+                            <div class="premium-action-arrow">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <style>
+            /* --- ESTILO PREMIUM: OSCURO, AFILADO Y SOFISTICADO --- */
+            .social-premium-section {
+                --p-dark-bg: #090b0e;
+                /* Un tono más profundo para mejorar el contraste */
+                --p-card-bg: #12161a;
+                --p-card-hover: #161b22;
+                --p-border: rgba(255, 255, 255, 0.05);
+                --p-text-main: #ffffff;
+                --p-text-muted: #8b949e;
+
+                /* COLORES DE IDENTIDAD DE MARCA OFICIALES */
+                --brand-yt: #FF0000;
+                --brand-fb: #1877F2;
+                --brand-ig-start: #405DE6;
+                --brand-ig-end: #E1306C;
+
+                /* Destellos cromáticos refinados (un poco más vivos para que se noten) */
+                --p-yt-glow: rgba(255, 0, 0, 0.18);
+                --p-fb-glow: rgba(24, 119, 242, 0.18);
+                --p-ig-glow: rgba(225, 48, 108, 0.15);
+
+                position: relative;
+                padding: 100px 24px;
+                background-color: var(--p-dark-bg);
+                overflow: hidden;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            }
+
+            .social-premium-section *,
+            .social-premium-section *::before,
+            .social-premium-section *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Brillo ambiental de fondo */
+            .premium-glow-radial {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 1000px;
+                height: 1000px;
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.015) 0%, rgba(9, 11, 14, 0) 70%);
+                pointer-events: none;
+                z-index: 1;
+            }
+
+            .premium-container {
+                max-width: 1120px;
+                margin: 0 auto;
+                position: relative;
+                z-index: 2;
+            }
+
+            /* Encabezado Directo y Compacto */
+            .premium-header {
+                max-width: 600px;
+                margin-bottom: 56px;
+            }
+
+            .premium-title {
+                font-size: clamp(32px, 4.5vw, 48px);
+                font-weight: 800;
+                color: var(--p-text-main);
+                line-height: 1.15;
+                letter-spacing: -1px;
+                margin-bottom: 16px;
+            }
+
+            .premium-subtitle {
+                color: var(--p-text-muted);
+                font-size: 16px;
+                line-height: 1.6;
+                font-weight: 400;
+            }
+
+            /* Grid Limpio sin Espaciados Excesivos */
+            .premium-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 20px;
+                /* Un poco más de aire entre tarjetas */
+            }
+
+            @media (min-width: 768px) {
+                .premium-grid {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+
+            /* Tarjetas Estilo Bloque de Cristal Oscuro */
+            .premium-card {
+                position: relative;
+                background-color: var(--p-card-bg);
+                border: 1px solid var(--p-border);
+                border-radius: 16px;
+                /* Bordes un toque más modernos */
+                text-decoration: none;
+                overflow: hidden;
+                display: block;
+                transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                    background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .premium-card-content {
+                padding: 36px 28px;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                position: relative;
+                z-index: 3;
+            }
+
+            /* --- IDENTIDAD EN REPOSO (LOGOS CON COLOR) --- */
+            .premium-icon-box {
+                width: 52px;
+                height: 52px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                flex-shrink: 0;
+            }
+
+            /* Colores específicos de íconos en reposo con fondos sutiles */
+            .box-yt {
+                color: var(--brand-yt);
+                background-color: rgba(255, 0, 0, 0.08);
+                border-color: rgba(255, 0, 0, 0.15);
+            }
+
+            .box-fb {
+                color: var(--brand-fb);
+                background-color: rgba(24, 119, 242, 0.08);
+                border-color: rgba(24, 119, 242, 0.15);
+            }
+
+            .box-ig {
+                color: #ffffff;
+                /* Asegura el ícono blanco por defecto */
+                background: linear-gradient(45deg, rgba(64, 93, 230, 0.1), rgba(225, 48, 108, 0.1));
+                border-color: rgba(225, 48, 108, 0.2);
+            }
+
+            /* Efecto de color para el trazo del logo de Instagram en reposo */
+            .box-ig svg {
+                stroke: url(#ig-gradient-id) !important;
+            }
+
+            .premium-icon-box svg {
+                width: 24px;
+                height: 24px;
+                display: block;
+            }
+
+            /* Textos Internos */
+            .premium-meta {
+                flex-grow: 1;
+            }
+
+            .premium-meta h3 {
+                font-size: 19px;
+                font-weight: 700;
+                color: var(--p-text-main);
+                margin-bottom: 3px;
+                letter-spacing: -0.3px;
+            }
+
+            .premium-handle {
+                font-size: 14px;
+                color: var(--p-text-muted);
+                font-weight: 500;
+                transition: color 0.3s ease;
+            }
+
+            /* Flecha de Acción Minimalista */
+            .premium-action-arrow {
+                color: var(--p-text-muted);
+                opacity: 0;
+                transform: translateX(-8px);
+                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                display: flex;
+                align-items: center;
+            }
+
+            .premium-action-arrow svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            /* Capas de Brillo de Fondo Dinámicas al Hover */
+            .premium-card-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                transition: opacity 0.4s ease;
+                z-index: 2;
+            }
+
+            .premium-card:nth-child(1) .premium-card-overlay {
+                background: radial-gradient(400px circle at var(--x, 50%) var(--y, 50%), var(--p-yt-glow), transparent 60%);
+            }
+
+            .premium-card:nth-child(2) .premium-card-overlay {
+                background: radial-gradient(400px circle at var(--x, 50%) var(--y, 50%), var(--p-fb-glow), transparent 60%);
+            }
+
+            .premium-card:nth-child(3):hover {
+                border-color: rgba(225, 48, 108, 0.3);
+                box-shadow: 0 10px 30px -10px rgba(225, 48, 108, 0.15);
+            }
+
+            /* --- COMPORTAMIENTOS HOVER PERSONALIZADOS POR MARCA --- */
+
+            /* Hover general de tarjetas */
+            .premium-card:hover {
+                background-color: var(--p-card-hover);
+                transform: translateY(-4px);
+            }
+
+            .premium-card:hover .premium-card-overlay {
+                opacity: 1;
+            }
+
+            .premium-card:hover .premium-action-arrow {
+                opacity: 1;
+                transform: translateX(0);
+                color: var(--p-text-main);
+            }
+
+            .premium-card:hover .premium-handle {
+                color: #fff;
+            }
+
+            /* 1. HOVER YOUTUBE */
+            .premium-card:nth-child(1):hover {
+                border-color: rgba(255, 0, 0, 0.3);
+                box-shadow: 0 10px 30px -10px rgba(255, 0, 0, 0.15);
+            }
+
+            .premium-card:nth-child(1):hover .box-yt {
+                background-color: var(--brand-yt);
+                color: #ffffff;
+                border-color: var(--brand-yt);
+                box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+            }
+
+            /* 2. HOVER FACEBOOK */
+            .premium-card:nth-child(2):hover {
+                border-color: rgba(24, 119, 242, 0.3);
+                box-shadow: 0 10px 30px -10px rgba(24, 119, 242, 0.15);
+            }
+
+            .premium-card:nth-child(2):hover .box-fb {
+                background-color: var(--brand-fb);
+                color: #ffffff;
+                border-color: var(--brand-fb);
+                box-shadow: 0 0 15px rgba(24, 119, 242, 0.4);
+            }
+
+            /* 3. HOVER INSTAGRAM */
+            .premium-card:nth-child(3):hover {
+                border-color: rgba(225, 48, 108, 0.3);
+                box-shadow: 0 10px 30px -10px rgba(225, 48, 108, 0.15);
+            }
+
+            .premium-card:nth-child(3):hover .box-ig {
+                background: linear-gradient(45deg, var(--brand-ig-start), var(--brand-ig-end));
+                color: #ffffff;
+                border-color: transparent;
+                box-shadow: 0 0 15px rgba(225, 48, 108, 0.4);
+            }
+
+            /* Cambiar el trazo a blanco puro cuando se hace hover en Instagram */
+            .premium-card:nth-child(3):hover .box-ig svg {
+                stroke: #ffffff !important;
+            }
+
+            .premium-card:nth-child(3) .box-ig svg {
+                stroke: #e63763 !important;
+            }
+
+
+            /* --- ANIMACIÓN INTERSECTION OBSERVER EN CADENA --- */
+            .reveal-premium-block {
+                opacity: 0;
+                transform: translateY(20px);
+                visibility: hidden;
+                transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                    visibility 0.6s;
+                will-change: transform, opacity;
+            }
+
+            .reveal-premium-block.is-in-view {
+                opacity: 1;
+                transform: translateY(0);
+                visibility: visible;
+            }
+
+            .reveal-premium-text {
+                opacity: 0;
+                transform: translateY(15px);
+                visibility: hidden;
+                transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                    visibility 0.6s;
+                will-change: transform, opacity;
+            }
+
+            .reveal-premium-text.is-in-view {
+                opacity: 1;
+                transform: translateY(0);
+                visibility: visible;
+            }
+
+            .reveal-premium-text.text-delay-1 {
+                transition-delay: 0.02s;
+            }
+
+            .reveal-premium-text.text-delay-2 {
+                transition-delay: 0.1s;
+            }
+
+            .premium-grid .reveal-premium-block:nth-child(1) {
+                transition-delay: 0.05s;
+            }
+
+            .premium-grid .reveal-premium-block:nth-child(2) {
+                transition-delay: 0.12s;
+            }
+
+            .premium-grid .reveal-premium-block:nth-child(3) {
+                transition-delay: 0.19s;
+            }
+        </style>
+
+        <!-- DONACIONES -->
+        <section class="premium-integration-layout" id="unified-luxury-architecture">
+
+            <div class="layout-max-wrapper">
+
+                <!-- CONTENEDOR MAESTRO: TIENE LA IMAGEN DE FONDO DE TODO EL COMPONENTE -->
+                <div class="master-premium-card reveal-on-scroll">
+
+                    <div class="master-absolute-image-bg">
+                        <img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=1200&auto=format&fit=crop"
+                            alt="Fondo Contextual Editorial" class="canvas-fluid-img" loading="lazy">
+                        <div class="canvas-dark-overlay"></div>
+                    </div>
+
+                    <!-- CAPA DE CRISTAL REAL (GLASSMORPHISM) QUE AFECTA A TODO EL CONTENEDOR -->
+                    <div class="master-glass-backdrop"></div>
+
+                    <!-- GRID INTERNO CON EL CONTENIDO EDITORIAL Y EL QR -->
+                    <div class="master-internal-grid">
+
+                        <!-- Bloque Izquierdo: Contenido Editorial y Datos de Red -->
+                        <div class="editorial-narrative-side">
+                            <h2 class="massive-display-title">
+                                Animate a <br>
+                                participar <br>
+                                <span class="chroma-text-fluid">en la obra.</span>
+                            </h2>
+
+                            <p class="clean-editorial-desc">
+                                Tu contribución puede ayudar a cada persona que recibimos. Cada recurso se transforma de
+                                manera inmediata en contención social, restauración familiar y el mantenimiento
+                                operativo de los canales de asistencia de nuestra comunidad.
+                            </p>
+
+                            <!-- Interfaz de Copiado Premium -->
+                            <div class="premium-banking-card">
+                                <div class="banking-static-meta">
+                                    <div class="meta-stack">
+                                        <span class="meta-tag">Titular de la Cuenta</span>
+                                        <span class="meta-value">Iglesia Comunidad Oficial</span>
+                                    </div>
+                                    <div class="meta-stack txt-right">
+                                        <span class="meta-tag">CUIT / Registro</span>
+                                        <span class="meta-value">30-12345678-9</span>
+                                    </div>
+                                </div>
+
+                                <div class="banking-action-row">
+                                    <div class="alias-payload-stack">
+                                        <span class="alias-tag-indicator">Alias de Red Bancaria</span>
+                                        <span class="alias-string-core"
+                                            id="target-alias-payload">iglesia.comunidad.oficial</span>
+                                    </div>
+                                    <button type="button" class="luxury-copy-action-btn"
+                                        onclick="triggerSystemCopy('target-alias-payload', this)">
+                                        <span class="copy-state-idle">
+                                            <svg class="copy-inline-icon" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2.5">
+                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                            </svg>
+                                            <span>Copiar</span>
+                                        </span>
+                                        <span class="copy-state-success">¡Copiado!</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bloque Derecho: Contenedor del QR Integrado -->
+                        <div class="visual-architecture-side">
+                            <div class="qr-floating-glass-card">
+                                <div class="glass-specular-reflection"></div>
+
+                                <div class="qr-hardware-wrapper">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=iglesia.comunidad.oficial"
+                                        alt="Código QR de Transferencia Inmediata" class="qr-native-element" width="300"
+                                        height="300" loading="lazy">
+                                </div>
+
+                                <div class="qr-interactive-footer">
+                                    <div class="pulse-radar-element">
+                                        <span class="radar-expanding-glow"></span>
+                                        <span class="radar-fixed-core"></span>
+                                    </div>
+                                    <span class="qr-footer-label">Escaneo Inmediato Interbancario</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <style>
+            /* --- ARQUITECTURA DE DISEÑO PREMIUM --- */
+            .premium-integration-layout {
+                --u-dark-space: #05070a;
+                --u-text-pure: #ffffff;
+                --u-text-clean: #f8fafc;
+                --u-text-muted: #94a3b8;
+                --u-emerald: #10b981;
+                position: relative;
+                padding: 140px 24px;
+                background-color: var(--u-dark-space);
+                overflow: hidden;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                text-rendering: optimizeLegibility;
+            }
+
+            @media (max-width:460px) {
+                .premium-integration-layout {
+                    padding: 50px 14px;
+                }
+            }
+
+            /* Reset local estricto */
+            .premium-integration-layout *,
+            .premium-integration-layout *::before,
+            .premium-integration-layout *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            .layout-dark-canvas {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle at 50% 50%, #0f172a 0%, var(--u-dark-space) 90%);
+                z-index: 1;
+            }
+
+            .layout-max-wrapper {
+                max-width: 1200px;
+                margin: 0 auto;
+                position: relative;
+                z-index: 2;
+            }
+
+            /* --- TARJETA CONTENEDORA MAESTRA (FOTO DE FONDO TOTAL) --- */
+            .master-premium-card {
+                position: relative;
+                border-radius: 28px;
+                padding: 64px;
+                overflow: hidden;
+                box-shadow: 0 50px 100px rgba(0, 0, 0, 0.75);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            }
+
+            @media (max-width: 992px) {
+                .master-premium-card {
+                    padding: 40px;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .master-premium-card {
+                    padding: 36px 20px;
+                }
+            }
+
+            /* Imagen absoluta que abarca TODO el componente */
+            .master-absolute-image-bg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+            }
+
+            .canvas-fluid-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            .canvas-dark-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                /* Tinte oscuro técnico para amalgamar la foto y dar contraste al texto */
+                background: linear-gradient(135deg, rgba(5, 7, 10, 0.9) 0%, rgba(15, 23, 42, 0.75) 100%);
+            }
+
+            /* Capa de Cristal Unificada sobre la foto */
+            .master-glass-backdrop {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                backdrop-filter: blur(24px) saturate(170%);
+                -webkit-backdrop-filter: blur(24px) saturate(170%);
+                z-index: 2;
+                pointer-events: none;
+            }
+
+            /* Contenedor del Grid arriba de las capas de fondo */
+            .master-internal-grid {
+                position: relative;
+                z-index: 3;
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 56px;
+                align-items: center;
+            }
+
+            @media (min-width: 992px) {
+                .master-internal-grid {
+                    grid-template-columns: 6.2fr 5.8fr;
+                }
+            }
+
+            /* --- COLUMNA EDITORIAL --- */
+            .editorial-narrative-side {
+                width: 100%;
+            }
+
+            .massive-display-title {
+                font-size: clamp(38px, 5.2vw, 58px);
+                font-weight: 800;
+                color: var(--u-text-pure);
+                line-height: 1.08;
+                letter-spacing: -0.03em;
+                margin-bottom: 24px;
+            }
+
+            /* COLOR DE GRADIENTE EN LAS LETRAS */
+            .chroma-text-fluid {
+                background: linear-gradient(90deg, #ffffff 10%, #c1c1ca 60%, rgba(255, 255, 255, 0.7) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .clean-editorial-desc {
+                font-size: 17.5px;
+                color: var(--u-text-clean);
+                line-height: 1.68;
+                font-weight: 400;
+                margin-bottom: 40px;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            }
+
+            @media (max-width:400px) {
+                .clean-editorial-desc {
+                    width: 240px;
+                    font-size: 14px;
+                }
+
+                .premium-banking-card {
+                    width: 100%;
+                    min-width: none;
+                    margin: auto;
+                }
+
+                .alias-string-core {
+                    font-size: 14px !important;
+                }
+
+                .banking-static-meta {
+                    padding: 20px 14px !important;
+                }
+            }
+
+            /* --- COMPONENTE BANCARIO INTERNO --- */
+            .premium-banking-card {
+                display: flex;
+                flex-direction: column;
+                background: rgba(5, 7, 10, 0.5);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                border-radius: 16px;
+                overflow: hidden;
+            }
+
+            .banking-static-meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 24px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            @media (max-width: 480px) {
+                .banking-static-meta {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 16px;
+                }
+
+                .meta-stack.txt-right {
+                    text-align: left;
+                }
+            }
+
+            .meta-stack {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .meta-stack.txt-right {
+                text-align: right;
+            }
+
+            .meta-tag {
+                font-size: 11px;
+                color: var(--u-text-muted);
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+
+            .meta-value {
+                font-size: 15px;
+                color: var(--u-text-pure);
+                font-weight: 600;
+            }
+
+            .banking-action-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 24px;
+                background: rgba(255, 255, 255, 0.01);
+                gap: 16px;
+            }
+
+            @media (max-width: 480px) {
+                .banking-action-row {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .luxury-copy-action-btn {
+                    width: 100%;
+                }
+            }
+
+            .alias-payload-stack {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .alias-tag-indicator {
+                font-size: 11px;
+                color: var(--u-emerald);
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+
+            .alias-string-core {
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+                font-size: 17px;
+                font-weight: 600;
+                color: var(--u-text-pure);
+            }
+
+            /* BOTÓN DE COPIADO PREMIUM */
+            .luxury-copy-action-btn {
+                position: relative;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+                color: var(--u-text-clean);
+                cursor: pointer;
+                height: 44px;
+                padding: 0 20px;
+                font-size: 14px;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                overflow: hidden;
+                flex-shrink: 0;
+            }
+
+            .luxury-copy-action-btn:hover {
+                background: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.25);
+                color: var(--u-text-pure);
+            }
+
+            .copy-state-idle {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s;
+            }
+
+            .copy-inline-icon {
+                width: 15px;
+                height: 15px;
+            }
+
+            .copy-state-success {
+                position: absolute;
+                color: var(--u-emerald);
+                opacity: 0;
+                transform: translateY(10px);
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s;
+            }
+
+            .luxury-copy-action-btn.system-copy-success {
+                background: rgba(16, 185, 129, 0.15);
+                border-color: var(--u-emerald);
+            }
+
+            .luxury-copy-action-btn.system-copy-success .copy-state-idle {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            .luxury-copy-action-btn.system-copy-success .copy-state-success {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* --- BLOQUE DERECHO: TARJETA DEL QR --- */
+            .visual-architecture-side {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+            }
+
+            .qr-floating-glass-card {
+                width: 100%;
+                max-width: 350px;
+                position: relative;
+
+                /* Sutil separación interna usando un fondo oscuro traslúcido */
+                background: rgba(5, 7, 10, 0.4);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 24px;
+                padding: 32px;
+                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+
+                transform: translate3d(0, 0, 0);
+                transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                    border-color 0.4s ease,
+                    background 0.4s ease;
+            }
+
+            .glass-specular-reflection {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 23px;
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 60%);
+                pointer-events: none;
+            }
+
+            .qr-hardware-wrapper {
+                width: 100%;
+                aspect-ratio: 1 / 1;
+                background-color: #ffffff;
+                border-radius: 16px;
+                overflow: hidden;
+                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+                padding: 20px;
+            }
+
+            .qr-native-element {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                display: block;
+            }
+
+            .qr-interactive-footer {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 24px;
+            }
+
+            .qr-footer-label {
+                font-size: 11.5px;
+                color: var(--u-text-clean);
+                font-weight: 600;
+                letter-spacing: 0.02em;
+            }
+
+            /* Radar Cinético */
+            .pulse-radar-element {
+                position: relative;
+                width: 8px;
+                height: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .pulse-radar-element .radar-fixed-core {
+                width: 6px;
+                height: 6px;
+                background-color: var(--u-text-muted);
+                border-radius: 50%;
+                transition: background-color 0.4s ease;
+            }
+
+            .pulse-radar-element .radar-expanding-glow {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                border: 1px solid var(--u-text-muted);
+                border-radius: 50%;
+                animation: radarPulseLoop 2.4s infinite cubic-bezier(0.215, 0.610, 0.355, 1);
+            }
+
+            @keyframes radarPulseLoop {
+                0% {
+                    transform: scale(1);
+                    opacity: 0.8;
+                }
+
+                100% {
+                    transform: scale(3.8);
+                    opacity: 0;
+                }
+            }
+
+            /* --- DISPARADORES HOVER --- */
+            .master-premium-card:hover {
+                border-color: rgba(255, 255, 255, 0.18);
+            }
+
+            .qr-floating-glass-card:hover {
+                transform: translate3d(0, -6px, 0);
+                background: rgba(5, 7, 10, 0.55);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+
+            .qr-floating-glass-card:hover .radar-fixed-core {
+                background-color: var(--u-emerald);
+            }
+
+            .qr-floating-glass-card:hover .radar-expanding-glow {
+                border-color: var(--u-emerald);
+            }
+
+            /* --- OBSERVER ON-SCROLL --- */
+            .reveal-on-scroll {
+                opacity: 0;
+                transform: translate3d(0, 30px, 0);
+                visibility: hidden;
+                transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                    visibility 0.8s;
+                will-change: transform, opacity;
+            }
+
+            .reveal-on-scroll.scroll-is-visible {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+                visibility: visible;
+            }
+        </style>
+
+        <!-- MENU MUSICA -->
+        <!-- BANNER FLOTANTE -->
+        <div id="music-cookie-banner" class="music-cookie-bar">
+            <div class="music-cookie-content">
+                <div class="music-cookie-info">
+                    <div class="music-cookie-icon">
+                        <i data-lucide="music" size="18"></i>
+                    </div>
+                    <div class="music-cookie-text">
+                        <h3>Ambienta tu experiencia</h3>
+                        <p>FrancoMaxOz le recomienda de forma personal activar la música de fondo para navegar en una
+                            atmósfera inmersiva completa.
+                        </p>
+                    </div>
+                </div>
+                <div class="music-cookie-actions">
+                    <button id="skip-music-btn" class="btn-cookie-skip">
+                        Ingresar en silencio
+                    </button>
+                    <button id="accept-music-btn" class="btn-cookie-accept">
+                        <i data-lucide="play" size="14"></i>
+                        <span>Escuchar música</span>
+                    </button>
+                </div>
+            </div>
+
+            <style>
+                /* --- BARRA FIJA 100% SIN DESBORDE --- */
+                .music-cookie-bar {
+                    box-sizing: border-box;
+                    position: fixed;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    background: #0f172a;
+                    border-top: 1px solid rgba(255, 255, 255, 0.1);
+                    padding: 40px 24px;
+                    z-index: 999;
+                    display: none;
+                }
+
+                .music-cookie-bar.active {
+                    display: block;
+                }
+
+                /* Estructura interna limpia */
+                .music-cookie-content {
+                    box-sizing: border-box;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 24px;
+                }
+
+                .music-cookie-info {
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+                }
+
+                .music-cookie-icon {
+                    width: 36px;
+                    height: 36px;
+                    background: rgba(168, 85, 247, 0.15);
+                    color: #a855f7;
+                    border-radius: 8px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                }
+
+                .music-cookie-text h3 {
+                    font-family: 'Outfit', sans-serif;
+                    color: #ffffff;
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    margin: 0 0 2px 0;
+                }
+
+                .music-cookie-text p {
+                    font-family: 'Outfit', sans-serif;
+                    color: #94a3b8;
+                    font-size: 0.8rem;
+                    margin: 0;
+                    line-height: 1.4;
+                }
+
+                .music-cookie-actions {
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                }
+
+                /* Botón Aceptar */
+                .btn-cookie-accept {
+                    box-sizing: border-box;
+                    height: 40px;
+                    padding: 0 20px;
+                    background: #ffffff;
+                    color: #0f172a;
+                    border: none;
+                    border-radius: 8px;
+                    font-family: 'Outfit', sans-serif;
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    transition: background 0.2s;
+                }
+
+                .btn-cookie-accept:hover {
+                    background: #ec4899;
+                    color: #ffffff;
+                }
+
+                /* Botón Omitir */
+                .btn-cookie-skip {
+                    box-sizing: border-box;
+                    background: transparent;
+                    border: none;
+                    color: #92a3bbee;
+                    font-family: 'Outfit', sans-serif;
+                    font-size: 1rem;
+                    font-weight: 500;
+                    cursor: pointer;
+                    padding: 8px 0;
+                    transition: color 0.2s;
+                    border-bottom: 1px solid #92a3bbee;
+                }
+
+                .btn-cookie-skip:hover {
+                    color: #ffffff;
+                }
+
+                /* Adaptabilidad móvil block sin fallas de renderizado */
+                @media (max-width: 768px) {
+                    .music-cookie-bar {
+                        padding: 16px;
+                    }
+
+                    .music-cookie-banner {
+                        width: 100%;
+                    }
+
+                    .music-cookie-content {
+                        flex-direction: column;
+                        align-items: stroke;
+                        gap: 16px;
+                    }
+
+                    .music-cookie-info {
+                        height: 130px;
+                    }
+
+                    .music-cookie-actions {
+                        flex-direction: column-reverse;
+                        align-items: stretch;
+                        gap: 10px;
+                    }
+
+                    .btn-cookie-accept {
+                        width: 100%;
+                    }
+
+                    .btn-cookie-skip {
+                        text-align: center;
+                    }
+                }
+            </style>
+
+
+        </div>
+
+        <!-- REPRODUCTOR DE AUDIO OCULTO -->
+        <audio id="bg-music" src="/UnCorazon.mp3" loop></audio>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+
+    <footer>
+        <div class="footer-grid">
+            <div class="f-col">
+                <div class="logo" style="color: white; margin-bottom: 20px;">
+                    <div class="logoImg">
+                        <!-- SVG Faro Negro (Por defecto) -->
+                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="20px" height="40px"
+                            viewBox="0 0 330.000000 617.000000" preserveAspectRatio="xMidYMid meet">
+
+                            <g transform="translate(0.000000,617.000000) scale(0.100000,-0.100000)" fill="#ffffffd8"
+                                stroke="none">
+                                <path d="M1807 6113 c-14 -27 -30 -67 -36 -90 -11 -40 -12 -41 -64 -48 -81
+-11 -225 -62 -299 -106 -36 -22 -89 -65 -118 -95 -49 -52 -100 -145 -100 -183
+0 -15 -12 -22 -52 -30 -139 -30 -279 -87 -352 -144 -48 -38 -80 -106 -71 -148
+17 -78 127 -154 292 -202 l52 -16 -10 25 c-31 82 8 137 143 203 172 84 375
+123 648 123 190 0 323 -17 470 -58 150 -43 278 -111 305 -165 17 -33 19 -82 5
+-110 -13 -24 -18 -24 74 6 102 33 149 58 202 107 143 132 21 277 -306 365
+l-103 28 -12 42 c-29 98 -105 187 -217 256 -67 40 -212 91 -293 102 l-50 6
+-28 79 c-38 107 -49 114 -80 53z" />
+                                <path d="M1630 5289 c-168 -19 -311 -58 -364 -100 -25 -20 -26 -24 -26 -135 0
+-63 4 -114 9 -114 5 0 71 7 148 16 190 23 695 23 883 0 74 -9 140 -16 147 -16
+9 0 11 26 7 103 -7 144 -6 141 -66 169 -150 71 -484 106 -738 77z" />
+                                <path d="M1475 4874 c-403 -38 -682 -138 -745 -269 -18 -37 -20 -49 -11 -83
+20 -71 119 -144 271 -198 l65 -24 -3 -47 c-2 -44 -18 -168 -57 -448 -21 -151
+-65 -488 -65 -503 0 -6 40 32 89 85 325 358 753 616 1371 828 91 31 199 68
+240 82 249 85 359 191 314 303 -45 113 -266 212 -569 254 -270 38 -628 46
+-900 20z" />
+                                <path d="M2450 4080 c-158 -49 -471 -185 -626 -273 -593 -333 -961 -771 -1128
+-1345 -38 -129 -64 -251 -95 -447 -12 -71 -23 -142 -26 -157 -2 -16 -3 -28 -1
+-28 1 0 18 21 36 48 123 173 352 412 520 543 373 289 856 538 1370 704 63 21
+119 41 123 45 7 7 -60 526 -92 720 -6 30 -13 80 -16 110 -11 95 -12 97 -65 80z" />
+                                <path d="M2535 2956 c-417 -136 -829 -334 -1130 -544 -231 -162 -511 -424
+-652 -612 -307 -412 -489 -908 -520 -1422 l-6 -108 -59 0 c-67 0 -104 -16
+-142 -60 -24 -29 -26 -39 -26 -121 l0 -89 1650 0 1651 0 -3 112 -3 112 -40 23
+-40 23 -1422 0 c-794 0 -1423 4 -1423 9 0 17 197 239 329 371 567 565 1310
+999 2083 1215 54 15 57 18 53 43 -3 15 -25 160 -50 322 -25 162 -49 322 -55
+355 -5 33 -16 107 -25 165 -36 243 -36 240 -53 239 -10 -1 -62 -16 -117 -33z" />
+                                <path d="M2695 1670 c-263 -84 -422 -149 -669 -272 -256 -128 -456 -248 -680
+-406 -222 -158 -375 -289 -570 -486 l-120 -121 602 -3 c331 -1 871 -1 1200 0
+l598 3 -37 245 c-52 345 -69 453 -84 550 -7 47 -28 184 -46 305 -18 121 -35
+223 -38 227 -3 3 -73 -15 -156 -42z" />
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="logoMasP">
+                        <div class="reveal-wrap">
+                            <h1>EL FARO</h1>
+                        </div>
+                        <div class="reveal-wrap">
+                            <div class="contenidoDebajo">
+                                <p>Iglesia Bautista</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p style="opacity: 0.5; font-size: 0.9rem;">Una congregación bautista con un
+                    corazón gigante para el servicio.</p>
+            </div>
+            <div class="f-col">
+                <h4 style="letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 25px;">MENÚ</h4>
+                <div style="display: flex; flex-direction: column; gap: 15px; opacity: 0.6; font-size: 0.9rem;">
+                    <span>Actividades</span>
+                    <span>Ministerios</span>
+                    <span>Donaciones</span>
+                </div>
+            </div>
+            <div class="f-col">
+                <h4 style="letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 25px;">REDES</h4>
+                <div style="display: flex; flex-direction: column; gap: 15px; opacity: 0.6; font-size: 0.9rem;">
+                    <span>Instagram</span>
+                    <span>Facebook</span>
+                    <span>YouTube</span>
+                </div>
+            </div>
+            <div class="f-col">
+                <h4 style="letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 25px;">UBICACIÓN</h4>
+                <p style="opacity: 0.5; font-size: 0.9rem;">Paunero 1471 Villa Mercedes, San Luis.
+                    Argentina.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>FRANCOMAXOZ &copy; 2026</span>
+            <span>DISEÑO PROFESIONAL FMoZ</span>
+        </div>
+    </footer>
+
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #94a3b8;
+            --white: #ffffff;
+            --soft-bg: #f8fafc;
+            --danger: #ef4444;
+            --fb-blue: #1877f2;
+            --cubic: cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--white);
+            color: var(--primary);
+            overflow-x: hidden;
+        }
+
+        /* --- BOTÓN DE AYUDA / EMERGENCIA --- */
+        .help-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.2);
+            transition: 0.4s var(--cubic);
+        }
+
+        .help-btn:hover {
+            transform: scale(1.05);
+            background: #b91c1c;
+        }
+
+        /* --- CONTACTO / NECESIDAD --- */
+        .need-help-section {
+            padding: 100px 40px;
+            background: var(--soft-bg);
+            text-align: center;
+        }
+
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .help-card {
+            background: var(--white);
+            padding: 50px;
+            border: 1px solid #e2e8f0;
+            transition: 0.4s var(--cubic);
+        }
+
+        .help-card:hover {
+            border-color: var(--danger);
+            transform: translateY(-10px);
+        }
+
+        .help-card i {
+            margin-bottom: 20px;
+            color: var(--danger);
+        }
+
+        .phone-link {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            display: block;
+            margin-top: 15px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 100px 40px 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 80px;
+            padding-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            opacity: 0.4;
+            letter-spacing: 2px;
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: 1.5s var(--cubic);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 900px) {
+            .stream-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links,
+            .help-btn span {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+   <script type="module" src="./main.js"></script>
+</body>
+
+</html>
